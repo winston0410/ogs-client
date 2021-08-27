@@ -41,6 +41,11 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
   req.locals.accessToken = access_token
   req.locals.refreshToken = refresh_token
 
+  //  Use database if needs to scale later
+  if (env.VITE_ADMIN_USERNAMES.split(":").includes(name)) {
+      req.locals.isAdmin = true
+  }
+
   return {
     status: 200,
     //  headers: {
