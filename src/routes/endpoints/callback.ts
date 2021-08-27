@@ -20,12 +20,10 @@ const getAccessToken = async (username:string, password:string) => {
     .then((res) => {
        return res.json()
      })
-    .catch((err) => {
-       return err
-    })
 }
 
 export const post: RequestHandler<Locals, FormData> = async(req) => {
+    try {
     const name = req.body.get("name")
     const password = req.body.get("password")
 
@@ -48,4 +46,12 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
       //  Location: '/lobby'
     //  }
   }
+    } catch (e) {
+      return {
+          status: e.status,
+          body: {
+              message: e.statusText
+          }
+      }
+    }
 }
