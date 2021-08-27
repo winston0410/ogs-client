@@ -10,7 +10,10 @@ export async function handle({request, resolve}) {
 
   const response = await resolve(request)
 
-  response.headers['set-cookie'] = `accessToken=${request.locals.accessToken || ''}; Path=/; HttpOnly`
+  const accessToken = `accessToken=${request.locals.accessToken || ''}; Path=/; Secure; HttpOnly;`
+  const refreshToken = `refreshToken=${request.locals.refreshToken || ''}; Path=/; Secure; HttpOnly;`
+
+  response.headers['set-cookie'] = [accessToken, refreshToken]
   
   return response
 }
