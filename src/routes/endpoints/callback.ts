@@ -1,7 +1,14 @@
-import jwtDecode, { JwtPayload } from "jwt-decode";
 import type { RequestHandler } from '@sveltejs/kit'
 import type { Locals } from '$lib/types';
 import env from '../../env'
+import { handleFetchError } from '../../lib/fetch'
+
+const getUser = async (token:string) => {
+    return fetch(`https://online-go.com/api/v1/me`, {
+        method: "GET",
+        headers: { authorization: `Bearer ${token}`}
+    }).then(handleFetchError).then(res => res.json())
+}
 
 const getAccessToken = async (username:string, password:string) => {
     const queryString = new URLSearchParams()
@@ -16,6 +23,7 @@ const getAccessToken = async (username:string, password:string) => {
          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
         body: queryString.toString()
     })
+    .then(handleFetchError)
     .then((res) => {
        return res.json()
      })
@@ -25,7 +33,6 @@ const getAccessToken = async (username:string, password:string) => {
 }
 
 export const post: RequestHandler<Locals, FormData> = async(req) => {
-    try {
     const name = req.body.get("name")
     const password = req.body.get("password")
 
@@ -41,8 +48,10 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
 
   req.locals.accessToken = access_token
   req.locals.refreshToken = refresh_token
-  //  Cannot decode jwt here
-  //  req.locals.user = jwtDecode<JwtPayload>(access_token)
+
+    const user = await getUser(access_token)
+
+    req.locals.user = user
   
   return {
     status: 302,
@@ -50,13 +59,4 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
       location: '/lobby'
     }
   }
-        
-    } catch (error) {
-      return {
-          status: 500,
-          body: {
-              message: error
-          }
-      }
-    }
 }
