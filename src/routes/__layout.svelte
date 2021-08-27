@@ -13,8 +13,14 @@ import '/src/app.css'
     margin: 0;
 padding: 0;
 }
+
+.container{
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
 
-<main>
+<main class="container">
 <slot></slot>
 </main>
