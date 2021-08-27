@@ -1,7 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit'
 import type { Locals } from '$lib/types';
 import env from '../../env'
-import { handleFetchError } from '../../lib/fetch'
+import { handleFetchError, catched } from '../../lib/fetch'
 
 const getAccessToken = async (username:string, password:string) => {
     const queryString = new URLSearchParams()
@@ -23,7 +23,7 @@ const getAccessToken = async (username:string, password:string) => {
 }
 
 export const post: RequestHandler<Locals, FormData> = async(req) => {
-    try {
+    return await catched(async () => {
     const name = req.body.get("name")
     const password = req.body.get("password")
 
@@ -46,12 +46,5 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
       //  Location: '/lobby'
     //  }
   }
-    } catch (e) {
-      return {
-          status: e.status,
-          body: {
-              message: e.statusText
-          }
-      }
-    }
+    })
 }

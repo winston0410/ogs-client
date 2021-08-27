@@ -1,6 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit'
-import type { Locals } from '$lib/types';
-import { handleFetchError } from '../../lib/fetch'
+import { handleFetchError, catched } from '../../lib/fetch'
 
 const getUser = async (token:string) => {
     return fetch(`https://online-go.com/api/v1/me`, {
@@ -10,8 +9,10 @@ const getUser = async (token:string) => {
 }
 
 export const get: RequestHandler = async (req) => {
+    return await catched(async () => {
     const user = await getUser(req.locals.accessToken)
     return {
         body: user
     }
+    })
 }
