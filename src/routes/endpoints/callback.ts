@@ -3,13 +3,6 @@ import type { Locals } from '$lib/types';
 import env from '../../env'
 import { handleFetchError } from '../../lib/fetch'
 
-const getUser = async (token:string) => {
-    return fetch(`https://online-go.com/api/v1/me`, {
-        method: "GET",
-        headers: { authorization: `Bearer ${token}`}
-    }).then(handleFetchError).then(res => res.json())
-}
-
 const getAccessToken = async (username:string, password:string) => {
     const queryString = new URLSearchParams()
     queryString.append("grant_type", "password")
@@ -49,14 +42,10 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
   req.locals.accessToken = access_token
   req.locals.refreshToken = refresh_token
 
-    const user = await getUser(access_token)
-
-    req.locals.user = user
-  
   return {
-    status: 302,
-    headers: {
-      location: '/lobby'
-    }
+    status: 200,
+    //  headers: {
+      //  Location: '/lobby'
+    //  }
   }
 }

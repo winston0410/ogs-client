@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   export async function load({ session }) {
-    if(session.user){
-        return { redirect: '/roster', status: 302 }
+    if(session.accessToken){
+        return { redirect: '/lobby', status: 302 }
     }
     return {}
   }
@@ -9,20 +9,21 @@
 </script>
 
 <script lang="ts">
+import { goto } from '$app/navigation';
 //  TODO: Fix typing later
 const handleSubmit = (e :any) => {
     const formData = new FormData(e.target)
     
     //  TODO:Validate username and password
     fetch(`/endpoints/callback`, {
+        redirect: "follow",
         method: "POST",
         body: formData
     })
     .then((res) => {
-       return res.json()
+        goto("/lobby", {})
      })
     .catch((err) => {
-       console.log('check err', err)
        return err
     })
 }

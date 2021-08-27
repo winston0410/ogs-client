@@ -1,13 +1,12 @@
 import cookie from 'cookie'
+import type {Handle, GetSession} from '@sveltejs/kit'
 
-export async function handle({request, resolve}) {
+export const handle: Handle = async ({request, resolve}) => {
   const cookies = cookie.parse(request.headers.cookie || '')
 
-  // code here happends before the endpoint or page is called
   request.locals.accessToken = cookies.accessToken
   request.locals.refreshToken = cookies.refreshToken
-  request.locals.user = cookies.user
-
+  
   const response = await resolve(request)
 
   const accessToken = `accessToken=${request.locals.accessToken || ''}; Path=/; Secure; HttpOnly;`
@@ -18,10 +17,9 @@ export async function handle({request, resolve}) {
   return response
 }
 
-export async function getSession(request) {
+export const getSession: GetSession = async (request) =>  {
   return {
     accessToken: request.locals.accessToken,
     refreshToken: request.locals.refreshToken,
-    user: request.locals.user
   }
 }
