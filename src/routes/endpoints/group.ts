@@ -2,8 +2,8 @@ import type { RequestHandler } from '@sveltejs/kit'
 import { handleFetchError, catched } from '../../lib/fetch'
 import endpoints from '../../endpoints'
 
-const getUser = async (token:string) => {
-    return fetch(endpoints.user, {
+const getGroup = async (token:string) => {
+    return fetch(endpoints.group, {
         method: "GET",
         headers: { authorization: `Bearer ${token}`}
     }).then(handleFetchError).then(res => res.json())
@@ -11,9 +11,9 @@ const getUser = async (token:string) => {
 
 export const get: RequestHandler = async (req) => {
     return await catched(async () => {
-    const user = await getUser(req.locals.accessToken)
+    const data = await getGroup(req.locals.accessToken)
     return {
-        body: user
+        body: data
     }
     })
 }

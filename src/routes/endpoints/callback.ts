@@ -2,6 +2,7 @@ import type { RequestHandler } from '@sveltejs/kit'
 import type { Locals } from '$lib/types';
 import env from '../../env'
 import { handleFetchError, catched } from '../../lib/fetch'
+import endpoints from '../../endpoints'
 
 const getAccessToken = async (username:string, password:string) => {
     const queryString = new URLSearchParams()
@@ -11,7 +12,7 @@ const getAccessToken = async (username:string, password:string) => {
     queryString.append("client_id", env.VITE_CLIENT_ID)
     queryString.append("client_secret", env.VITE_CLIENT_SECRET)
     
-    return fetch(`https://online-go.com/oauth2/token/`, {
+    return fetch(endpoints.accessToken, {
         method: "POST",
          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
         body: queryString.toString()
