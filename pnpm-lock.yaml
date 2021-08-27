@@ -10,7 +10,6 @@ specifiers:
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^3.2.0
-  jwt-decode: ^3.1.2
   modern-css-reset: ^1.4.0
   postcss: ^8.3.6
   postcss-custom-properties: ^11.0.0
@@ -26,7 +25,6 @@ specifiers:
 
 dependencies:
   cookie: 0.4.1
-  jwt-decode: 3.1.2
   modern-css-reset: 1.4.0
 
 devDependencies:
@@ -992,10 +990,6 @@ packages:
   /json-stable-stringify-without-jsonify/1.0.1:
     resolution: {integrity: sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=}
     dev: true
-
-  /jwt-decode/3.1.2:
-    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
-    dev: false
 
   /kleur/4.1.4:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
