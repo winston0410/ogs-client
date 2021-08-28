@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
+import LogoutButton from '$lib/LogoutButton.svelte'
 export const load = getProps({ _user: '/endpoints/user', _group: '/endpoints/group', _game: '/endpoints/game' })
 </script>
 
@@ -28,8 +29,8 @@ align-items: center;
     }
 </style>
 
-
 <div class="gamelist">
+    <LogoutButton />
     <div class="gamelist-inner">
     <h1>Games you can join</h1>
     <ul class="gamelist-list" role="list">
