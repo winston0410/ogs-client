@@ -28,6 +28,8 @@ name: yup.string().required(),
 password: yup.string().required(),
 });
 
+let submitError = ""
+
 const { form } = createForm({
 onSubmit: async (values) => {
     fetch(`/endpoints/callback`, {
@@ -36,14 +38,23 @@ onSubmit: async (values) => {
     })
     .then(handleFetchError)
     .then((res) => {
+        submitError = ""
         //  goto doesn't work here, as getSession requires a request from server.
         //  redirect to the current page, and let __layout.svelte to take over to redirection
-        //  window.location.href = "/"
+        window.location.href = "/"
      })
     .catch((err) => {
-       //  set error message here
-       console.log('check error', err)
-       return err
+       switch(err.status){
+            case(400):{
+               submitError = "Either your username or password is not correct. Please try again."
+               break
+           }
+           
+            case(500):{
+               submitError = "Something wrong with our server. Please try again later."
+               break
+           }
+       }
     })
 },
     extend: [validator, svelteReporter],
@@ -76,11 +87,11 @@ display: flex;
       flex-direction: column;
   }
 
-  .input-field, .validation-message{
+  .validation, .validation-message{
       --validation-message-height: var(--xxl-space);
   }
 
-  .input-field{
+  .validation{
     position: relative;
     margin-bottom: var(--validation-message-height);
   }
@@ -96,7 +107,7 @@ display: flex;
 
 <div class="login">
     <form class="login-form" use:form>
-        <div class="input-field">
+        <div class="validation">
         <label class="login-form-label">
         <span>Username</span>
         <input id="name" type="text" name="name" />
@@ -107,7 +118,7 @@ display: flex;
             </span>
           </ValidationMessage>
         </div>
-        <div class="input-field">
+        <div class="validation">
         <label class="login-form-label">
         <span>Password</span>
         <input type="password" id="password" name="password" />
@@ -119,5 +130,8 @@ display: flex;
           </ValidationMessage>
         </div>
         <button type="submit">Log In</button>
+        <div class="validation">
+        <span class="validation-message">{submitError}</span>
+        </div>
     </form>
 </div>
