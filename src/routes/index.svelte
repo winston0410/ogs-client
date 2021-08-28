@@ -17,19 +17,25 @@
 </script>
 
 <script lang="ts">
+import { handleFetchError } from '../lib/fetch.ts'
 //  TODO: Fix typing later
 const handleSubmit = (e :any) => {
+    
     const formData = new FormData(e.target)
 
     fetch(`/endpoints/callback`, {
         method: "POST",
         body: formData
     })
+    .then(handleFetchError)
     .then((res) => {
         //  goto doesn't work here, as getSession requires a request from server.
-        window.location.href = "/lobby"
+        //  redirect to the current page, and let __layout.svelte to take over to redirection
+        window.location.href = "/"
      })
     .catch((err) => {
+       //  set error message here
+       console.log('check error', err)
        return err
     })
 }
