@@ -1,8 +1,15 @@
 <script context="module" lang="ts">
   export async function load({ session }) {
+    const isAdmin = !!parseInt(session.isAdmin)
+    
     if(session.accessToken){
-        return { redirect: '/lobby', status: 302 }
+        if(isAdmin){
+            return { redirect: '/admin', status: 302 }
+        } else {
+            return { redirect: '/lobby', status: 302 }
+        }
     }
+    
     return {}
   }
 
@@ -13,19 +20,20 @@ import { goto } from '$app/navigation';
 //  TODO: Fix typing later
 const handleSubmit = (e :any) => {
     const formData = new FormData(e.target)
-    
+
     //  TODO:Validate username and password
-    fetch(`/endpoints/callback`, {
-        redirect: "follow",
-        method: "POST",
-        body: formData
-    })
-    .then((res) => {
-        goto("/lobby", {})
-     })
-    .catch((err) => {
-       return err
-    })
+    //  fetch(`/endpoints/callback`, {
+        //  method: "POST",
+        //  body: formData
+    //  })
+    //  .then((res) => {
+        //  console.log('success')
+     //  })
+    //  .catch((err) => {
+       //  return err
+    //  })
+    
+    e.target.submit()
 }
 </script>
 
@@ -56,7 +64,7 @@ display: flex;
 </style>
 
 <div class="login">
-    <form class="login-form" on:submit|preventDefault={handleSubmit}>
+    <form action="/endpoints/callback" method="POST" class="login-form" on:submit|preventDefault={handleSubmit}>
         <label class="login-form-label">
         <span>Username</span>
         <input type="text" name="name" />

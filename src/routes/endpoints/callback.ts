@@ -43,14 +43,24 @@ export const post: RequestHandler<Locals, FormData> = async(req) => {
 
   //  Use database if needs to scale later
   if (env.VITE_ADMIN_USERNAMES.split(":").includes(name)) {
-      req.locals.isAdmin = true
+      req.locals.isAdmin = 1
   }
 
+  if (req.locals.isAdmin) {
   return {
-    status: 200,
-    //  headers: {
-      //  Location: '/lobby'
-    //  }
+    status: 302,
+    headers: {
+      Location: '/admin'
+    }
   }
+  } else {
+  return {
+    status: 302,
+    headers: {
+      Location: '/lobby'
+    }
+  }
+  }
+
     })
 }
