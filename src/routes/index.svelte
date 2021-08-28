@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  export const router = false;
   export async function load({ session }) {
     const isAdmin = !!parseInt(session.isAdmin)
     
@@ -16,24 +17,21 @@
 </script>
 
 <script lang="ts">
-import { goto } from '$app/navigation';
 //  TODO: Fix typing later
 const handleSubmit = (e :any) => {
     const formData = new FormData(e.target)
 
-    //  TODO:Validate username and password
-    //  fetch(`/endpoints/callback`, {
-        //  method: "POST",
-        //  body: formData
-    //  })
-    //  .then((res) => {
-        //  console.log('success')
-     //  })
-    //  .catch((err) => {
-       //  return err
-    //  })
-    
-    e.target.submit()
+    fetch(`/endpoints/callback`, {
+        method: "POST",
+        body: formData
+    })
+    .then((res) => {
+        //  goto doesn't work here, as getSession requires a request from server.
+        window.location.href = "/lobby"
+     })
+    .catch((err) => {
+       return err
+    })
 }
 </script>
 
@@ -64,7 +62,7 @@ display: flex;
 </style>
 
 <div class="login">
-    <form action="/endpoints/callback" method="POST" class="login-form" on:submit|preventDefault={handleSubmit}>
+    <form class="login-form" on:submit|preventDefault={handleSubmit}>
         <label class="login-form-label">
         <span>Username</span>
         <input type="text" name="name" />

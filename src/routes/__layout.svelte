@@ -1,8 +1,9 @@
 <script context="module">
 export async function load({page, session}) {
-  if ( page.path !== "/" && !session.accessToken) {
-    return { redirect: '/', status: 302 }
-  }
+  console.log('layout session running', session)
+  //  if ( page.path !== "/" && !session.accessToken) {
+    //  return { redirect: '/', status: 302 }
+  //  }
   return { props: {} }
 }
 import '/src/app.css'
