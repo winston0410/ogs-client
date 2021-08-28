@@ -11,6 +11,8 @@ const getAccessToken = async (username:string, password:string) => {
     queryString.append("password", password)
     queryString.append("client_id", env.VITE_CLIENT_ID)
     queryString.append("client_secret", env.VITE_CLIENT_SECRET)
+
+    console.log('check querystring', queryString.toString())
     
     return fetch(endpoints.accessToken, {
         method: "POST",
