@@ -58,6 +58,7 @@ onSubmit: async (values) => {
 
 <svelte:head>
     <title>Smartgo academy</title>
+    <meta name="description" content="" />
 </svelte:head>
 
 <style>

@@ -13,6 +13,11 @@ export async function load({page, session}) {
 <style>
 </style>
 
+<svelte:head>
+    <title>Smartgo academy</title>
+    <meta name="description" content="" />
+</svelte:head>
+
 <section>
     <h1>Game coordinator</h1>
     <div>

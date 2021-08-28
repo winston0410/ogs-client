@@ -9,6 +9,11 @@ export const user = _user.value
 //  console.log('check user value', user)
 </script>
 
+<svelte:head>
+    <title>Smartgo academy</title>
+    <meta name="description" content="" />
+</svelte:head>
+
 <style>
     .gamelist{
         display: flex;
