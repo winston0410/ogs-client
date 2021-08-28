@@ -23,10 +23,9 @@ const getAccessToken = async (username:string, password:string) => {
      })
 }
 
-export const post: RequestHandler<Locals, FormData> = async(req) => {
+export const post: RequestHandler<Locals, string> = async(req) => {
     return await catched(async () => {
-    const name = req.body.get("name")
-    const password = req.body.get("password")
+    const { name, password } = JSON.parse(req.body)
 
     if (!name || !password) {
         return {

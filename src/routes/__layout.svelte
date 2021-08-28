@@ -12,13 +12,18 @@ import '/src/app.css'
 <style>
 :global(ul){
     margin: 0;
-padding: 0;
+    padding: 0;
+}
+
+:global(body){
+    font-family: var(--content-font);
 }
 
 .container{
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0px 20px;
 }
 </style>
 

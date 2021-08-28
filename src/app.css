@@ -1,9 +1,61 @@
 @import 'modern-css-reset';
 
+:root{
+    --xs: 0.714;
+    --sm: 1;
+    --md: 1.4;
+    --lg: 1.96;
+    --xl: 2.744;
+    --xxl: 3.842;
+}
+
+/* container-width */
+:root{
+    --container-width: 1024px;
+}
+
+/* space */
+:root{
+    --space-base-value: calc(var(--font-base-value) / 2);
+    --xs-space: calc(var(--xs) * var(--space-base-value));
+    --sm-space: calc(var(--sm) * var(--space-base-value));
+    --md-space: calc(var(--md) * var(--space-base-value));
+    --lg-space: calc(var(--lg) * var(--space-base-value));
+    --xl-space: calc(var(--xl) * var(--space-base-value));
+    --xxl-space: calc(var(--xxl) * var(--space-base-value));
+}
+
+/* font-family */
 :root {
+    --display-font: VT323;
     --content-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-body{
-    font-family: var(--content-font);
+/* font-size */
+:root{
+    --font-base-value: 16px;
+    --xs-font: calc(var(--xs) * var(--font-base-value));
+    --sm-font: calc(var(--sm) * var(--font-base-value));
+    --md-font: calc(var(--md) * var(--font-base-value));
+    --lg-font: calc(var(--lg) * var(--font-base-value));
+    --xl-font: calc(var(--xl) * var(--font-base-value));
+}
+
+/* color */
+:root{
+    --base-color: hsla(50, 10%, 11%, 1);
+    --base-contrast-color: hsla(50, 5%, 90%, 1);
+    --highlight-color: hsla(45, 98%, 50%, 1);
+    --highlight-tint1-color: hsla(45, 98%, 75%, 1);
+    --highlight-tint2-color: hsla(45, 98%, 85%, 1);
+}
+
+/* border-radius */
+:root{
+    --radius-base-value: 5px;
+    --xs-radius: calc(var(--xs) * var(--radius-base-value));
+    --sm-radius: calc(var(--sm) * var(--radius-base-value));
+    --md-radius: calc(var(--md) * var(--radius-base-value));
+    --lg-radius: calc(var(--lg) * var(--radius-base-value));
+    --xl-radius: calc(var(--xl) * var(--radius-base-value));
 }
