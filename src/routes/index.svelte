@@ -44,17 +44,11 @@ onSubmit: async (values) => {
         window.location.href = "/"
      })
     .catch((err) => {
-       switch(err.status){
-            case(400):{
+           if(err.status >= 400 && err.status < 500){
                submitError = "Either your username or password is not correct. Please try again."
-               break
-           }
-           
-            case(500):{
+           } else {
                submitError = "Something wrong with our server. Please try again later."
-               break
            }
-       }
     })
 },
     extend: [validator, svelteReporter],
