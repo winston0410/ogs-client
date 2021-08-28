@@ -1,13 +1,12 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
-export const load = getProps({ _user: '/endpoints/user', _group: '/endpoints/group', _game: '/endpoints/game' })
+export const load = getProps({ _user: '/endpoints/user' })
 </script>
 
 <script lang="ts">
 import Header from '$lib/Header.svelte'
 export let _user
 export const user = _user.value
-console.log('check user value', user)
 </script>
 
 <style>
