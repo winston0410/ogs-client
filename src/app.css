@@ -59,3 +59,9 @@
     --lg-radius: calc(var(--lg) * var(--radius-base-value));
     --xl-radius: calc(var(--xl) * var(--radius-base-value));
 }
+
+/* layout */
+:root{
+    --sidebar: 30%;
+    --main: 70%;
+}

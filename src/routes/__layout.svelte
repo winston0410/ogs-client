@@ -14,6 +14,10 @@ import '/src/app.css'
     padding: 0;
 }
 
+:global(input){
+    padding: 0;
+}
+
 :global(body){
     font-family: var(--content-font);
 }
@@ -22,7 +26,7 @@ import '/src/app.css'
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0px 20px;
+    position: relative
 }
 </style>
 
