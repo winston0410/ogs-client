@@ -10,8 +10,13 @@ export const user = _user.value
 </script>
 
 <style>
+.container{
+    padding-top: var(--headerOffset);
+}
+    
 @media (min-width: 1200px) {
     .container{
+        padding-top: unset;
         display: grid;
         grid-template-columns: var(--sidebar) var(--main);
     }

@@ -1,12 +1,22 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
-export const load = getProps({ _tournament: '/endpoints/tournament' })
+export const load = getProps({ tournament: '/endpoints/tournament', _game: '/endpoints/game', notification: '/endpoints/notification' })
 </script>
 
 <script lang="ts">
-export let _tournament
-export const tournament = _tournament.value
-console.log('check tournament', tournament)
+export let tournament, _game, notification
+export const game = _game.value
+console.log('check tournament', tournament, game, notification.value)
+
+const acceptInvitation = (id: number) => () => {
+    console.log('clicking')
+    fetch('/endpoints/tournament/notification', {
+        method: "POST",
+        body: JSON.stringify({
+            request_id: id
+        })
+    })
+}
 </script>
 
 <svelte:head>
@@ -16,11 +26,11 @@ console.log('check tournament', tournament)
 
 <style>
     .gamelist{
-        display: flex;
-height: 100vh;
-width: 100%;
-justify-content: center;
-align-items: center;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
     }
     .gamelist-list{
         display: flex;
@@ -29,24 +39,52 @@ align-items: center;
 </style>
 
 <div class="gamelist">
-    <div class="gamelist-inner">
-    <h1>Games you can join</h1>
-    <ul class="gamelist-list" role="list">
-    <!--  {#if tournament.length > 0}  -->
-        <!--  <button on:click={toggle}>  -->
-            <!--  Log out  -->
-        <!--  </button>  -->
-    <!--  {/if}  -->
-	{#each tournament.results as { name, handicap, description }}
-		<li>
-            <div>
-                <span>{name}</span>
-                <!--  <a href={url}>  -->
-                    <!--  <span>{url}</span>  -->
-                <!--  </a>  -->
-            </div>
-        </li>
-	{/each}
-    </ul>
-    </div>
+    <section class="inprogress-gamelist">
+        <h2>Game in progress</h2>
+        {#if tournament.ok }
+        <ul class="gamelist-list" role="list">
+            {#each tournament.value.results as { name, handicap, description }}
+                <li>
+                    <div>
+                        <span>{name}</span>
+                        <!--  <a href={url}>  -->
+                            <!--  <span>{url}</span>  -->
+                        <!--  </a>  -->
+                    </div>
+                </li>
+            {/each}
+        </ul>
+        {:else}
+           <div>
+               <span>Something wrong with the server. Please try again later.</span>
+           </div>
+        {/if}
+    </section>
+    
+    <section class="future-gamelist">
+    <h2>Game to play next</h2>
+        {#if notification.ok }
+        <ul class="gamelist-list" role="list">
+            {#each notification.value as { tournamentname:name, tournamentrqid: requestId, invitingUser, timestamp, type }}
+                {#if type === "tournamentInvitation"}
+                <li>
+                    <div>
+                        <span>{name}</span>
+                        <!--  <a href={url}>  -->
+                            <!--  <span>{url}</span>  -->
+                        <!--  </a>  -->
+                        <button on:click={acceptInvitation(requestId)}>
+                            <span>Accept</span>
+                        </button>
+                    </div>
+                </li>
+                {/if}
+            {/each}
+        </ul>
+        {:else}
+           <div>
+               <span>Something wrong with the server. Please try again later.</span>
+           </div>
+        {/if}
+    </section>
 </div>

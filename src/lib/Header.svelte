@@ -1,6 +1,22 @@
 <script lang="ts">
 import LogoutButton from '$lib/LogoutButton.svelte'
+import { onMount } from 'svelte';
+import { headerOffset } from '/src/store'
 export let user
+let height
+
+const setHeaderOffset = () => {
+    headerOffset.set(height)
+    document.documentElement.style.setProperty('--headerOffset', `${$headerOffset}px`);
+}
+
+onMount(() => {
+    setHeaderOffset()
+    window.addEventListener('resize', setHeaderOffset);
+    return () => {
+        window.removeEventListener('resize', setHeaderOffset);
+    }
+})
 </script>
 
 <style>
@@ -26,7 +42,7 @@ export let user
 }
 </style>
 
-<header class="header">
+<header bind:clientHeight={height} class="header">
     <div class="profile">
         <span class="profile-name">{user.username}</span>
         <span class="profile-rank">{Math.floor(user.ranking)}k</span>
