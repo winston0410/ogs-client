@@ -32,7 +32,7 @@ const allPromiseSettled = <T>(t: PromiseTable<T>): Promise<UnwrappedTable<T>> =>
                 result[key] = { ok: true, status: res.status, value: await res.json() }
                 index ++
             }).catch(async (err) => {
-                result[key] = { ok: false, status: err.status, reason: await err.json() }
+                result[key] = { ok: false, status: err.status, reason: await err }
                 index ++
             }).finally(() => {
                 if (index === Object.keys(t).length) {

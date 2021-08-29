@@ -7,6 +7,7 @@ export const load = getProps({ tournament: '/endpoints/tournament', _game: '/end
 export let tournament, _game, notification
 export const game = _game.value
 console.log('check tournament', tournament, game, notification.value)
+import { handleFetchError } from '$lib/fetch'
 
 const acceptInvitation = (id: number) => () => {
     console.log('clicking')
@@ -15,6 +16,9 @@ const acceptInvitation = (id: number) => () => {
         body: JSON.stringify({
             request_id: id
         })
+    }).then(handleFetchError).then(res => {
+      console.log(res.json())
+      return res.json()
     })
 }
 </script>
