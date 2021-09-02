@@ -10,11 +10,16 @@ const getExpireTimestamp = (expiresIn: number): number => {
 	return ts;
 };
 
-const getAccessToken = async (username: string, password: string) => {
+const getAccessToken = async (username: string, password: string, refreshToken: string) => {
 	const queryString = new URLSearchParams();
-	queryString.append('grant_type', 'password');
 	queryString.append('username', username);
-	queryString.append('password', password);
+    if (refreshToken) {
+        queryString.append('grant_type', 'refresh_token');
+        queryString.append('refresh_token', refreshToken);
+    } else {
+        queryString.append('grant_type', 'password');
+        queryString.append('password', password);
+    }
 	queryString.append('client_id', env.VITE_CLIENT_ID);
 	queryString.append('client_secret', env.VITE_CLIENT_SECRET);
 
@@ -31,18 +36,28 @@ const getAccessToken = async (username: string, password: string) => {
 
 export const post: RequestHandler<Locals, string> = async (req) => {
 	return await catched(async () => {
-		const { name, password } = JSON.parse(req.body);
+		const { name, password, refreshToken } = JSON.parse(req.body);
 
-		if (!name || !password) {
+        if (!name) {
 			return {
 				status: 400,
 				body: {
-					message: 'Missing username or password'
+					message: 'Missing username'
+				}
+			};
+        }
+
+		if (!refreshToken && !password) {
+			return {
+				status: 400,
+				body: {
+					message: 'Missing password or refreshToken'
 				}
 			};
 		}
-		const { access_token, refresh_token, expires_in } = await getAccessToken(name, password);
+		const { access_token, refresh_token, expires_in } = await getAccessToken(name, password, refreshToken);
 
+		req.locals.username = name;
 		req.locals.accessToken = access_token;
 		req.locals.refreshToken = refresh_token;
 
