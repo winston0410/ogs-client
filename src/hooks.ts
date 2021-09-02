@@ -7,14 +7,16 @@ export const handle: Handle = async ({request, resolve}) => {
   request.locals.accessToken = cookies.accessToken
   request.locals.refreshToken = cookies.refreshToken
   request.locals.isAdmin = cookies.isAdmin
+  request.locals.expiresIn = cookies.expiresIn
   
   const response = await resolve(request)
 
   const accessToken = `accessToken=${request.locals.accessToken || ''}; Path=/; Secure; HttpOnly;`
   const refreshToken = `refreshToken=${request.locals.refreshToken || ''}; Path=/; Secure; HttpOnly;`
   const isAdmin = `isAdmin=${request.locals.isAdmin || ''}; Path=/; Secure; HttpOnly;`
-
-  response.headers['set-cookie'] = [accessToken, refreshToken, isAdmin]
+  const expiresIn = `expiresIn=${request.locals.expiresIn || ''}; Path=/; Secure;`
+  
+  response.headers['set-cookie'] = [accessToken, refreshToken, isAdmin, expiresIn]
   
   return response
 }
@@ -23,6 +25,7 @@ export const getSession: GetSession = async (request) =>  {
   return {
     accessToken: request.locals.accessToken,
     refreshToken: request.locals.refreshToken,
-    isAdmin: request.locals.isAdmin
+    isAdmin: request.locals.isAdmin,
+    expiresIn: request.locals.expiresIn,
   }
 }

@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
-export const load = getProps({ tournament: '/endpoints/tournament', _game: '/endpoints/game', notification: '/endpoints/notification' })
+export const load = getProps({ tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' })
 </script>
 
 <script lang="ts">
-export let tournament, _game, notification
-export const game = _game.value
-console.log('check tournament', tournament, game, notification.value)
+export let tournament, game, notification
+console.log('check tournament', tournament.value.results, game.value)
+console.log('check notification', notification.value)
 import { handleFetchError } from '$lib/fetch'
 
 const acceptInvitation = (id: number) => () => {
@@ -17,8 +17,10 @@ const acceptInvitation = (id: number) => () => {
             request_id: id
         })
     }).then(handleFetchError).then(res => {
-      console.log(res.json())
-      return res.json()
+        console.log('check res', res)
+    }).catch(e => {
+        //issue, handle missed tournament
+        console.log('check e', e)
     })
 }
 </script>
@@ -74,9 +76,6 @@ const acceptInvitation = (id: number) => () => {
                 <li>
                     <div>
                         <span>{name}</span>
-                        <!--  <a href={url}>  -->
-                            <!--  <span>{url}</span>  -->
-                        <!--  </a>  -->
                         <button on:click={acceptInvitation(requestId)}>
                             <span>Accept</span>
                         </button>
