@@ -1,8 +1,9 @@
 import type { RequestHandler } from '@sveltejs/kit'
 import { handleFetchError, catched } from '$lib/fetch'
+import type { ITournaments } from '$lib/typing'
 import endpoints from '../../endpoints'
 
-const getTournament = async (token:string) => {
+const getTournament = async (token:string): Promise<ITournaments> => {
     return fetch(endpoints.getTournament, {
         method: "GET",
         headers: { authorization: `Bearer ${token}`}

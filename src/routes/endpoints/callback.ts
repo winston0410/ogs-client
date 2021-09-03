@@ -57,13 +57,13 @@ export const post: RequestHandler<Locals, string> = async (req) => {
 		}
 		const { access_token, refresh_token, expires_in } = await getAccessToken(name, password, refreshToken);
 
+        console.log('not throw yet')
+
 		req.locals.username = name;
 		req.locals.accessToken = access_token;
 		req.locals.refreshToken = refresh_token;
 
 		const ts = getExpireTimestamp(expires_in);
-
-		console.log('check timestamp', ts);
 
 		req.locals.expiresIn = ts;
 
