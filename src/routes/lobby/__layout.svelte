@@ -5,7 +5,11 @@ export const load = getProps({ user: '/endpoints/user' })
 
 <script lang="ts">
 import Header from '$lib/Header.svelte'
+import { currentUser } from "/src/store"
 export let user
+if(user.ok){
+    currentUser.set(user.value)
+}
 </script>
 
 <style>
@@ -23,6 +27,6 @@ export let user
 </style>
 
 <div class="container">
-<Header user={user.ok ? user.value : {}}/>
+<Header user={$currentUser}/>
 <slot></slot>
 </div>

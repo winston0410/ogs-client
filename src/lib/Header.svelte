@@ -27,10 +27,13 @@ const handleResize = (e) => {
 
 @media (min-width: 1200px) {
    header{
-        position: static;
-        height:100vh;
+        position: sticky;
+        top: 0px;
+        align-self: start;
         flex-direction: column;
-        justify-content: unset;
+        padding-bottom: calc(var(--sm-space) + var(--sectionYpadding));
+        height: 100vh;
+        justify-content: space-between;
    }
 }
 </style>

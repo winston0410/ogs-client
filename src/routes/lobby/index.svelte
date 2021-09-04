@@ -1,17 +1,21 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
 export const load = getProps({ tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' })
-import Notification from '$lib/Notification.svelte'
 import GameHistoryList from '$lib/GameHistoryList.svelte'
 import GameCard from '$lib/GameCard.svelte'
+import EmptyCard from "$lib/EmptyCard.svelte"
 import Heading from '$lib/Heading.svelte'
 </script>
 
 <script lang="ts">
+import NotificationList from "$lib/NotificationList.svelte"
+
+
 const currentTime = new Date().getTime()
 export let tournament, game, notification
 console.log('check tournament', game)
 //  console.log('check notification', notification.value)
+const currentGame = game.value.results.find(item => !item.ended)
 </script>
 
 <svelte:head>
@@ -21,16 +25,24 @@ console.log('check tournament', game)
 
 <style>
 main{
-padding: 0 var(--sm-space);
+    padding: var(--md-space);
 }
 
 section{
-    margin-top: var(--md-space);
+    --section-margin-bottom: var(--md-space);
+}
+
+section:not(:last-of-type){
+    margin-bottom: var(--section-margin-bottom);
 }
 
 @media (min-width: 1200px){
     main{
-        padding: 0 var(--xxl-space);
+        padding: var(--xxl-space);
+    }
+    
+    section{
+        --section-margin-bottom: var(--xl-space);
     }
 }
 </style>
@@ -39,28 +51,19 @@ section{
     {#if game.ok }
     <section>
         <Heading>Game in progress</Heading>
-        <GameCard game={game.value.results.find(item => !item.ended)}/>
+    {#if currentGame}
+        <GameCard game={currentGame}/>
+    {:else}
+        <EmptyCard message={"You don't have any game in progress right now."}/>
+    {/if}
+    </section>
+    <section>
+    <Heading>Game to play next</Heading>
+       <NotificationList notifications={notification}/>
     </section>
     <section>
         <Heading>Last 10 games result</Heading>
-        <GameHistoryList games={game} tournament={tournament}/>
+        <GameHistoryList games={game} tournaments={tournament}/>
     </section>
     {/if}
-    
-    <section>
-    <Heading>Game to play next</Heading>
-        {#if notification.ok }
-        <ul class="gamelist-list" role="list">
-            {#each notification.value as n}
-                <li>
-                      <Notification notification={n} />
-                </li>
-            {/each}
-        </ul>
-        {:else}
-           <div>
-               <span>Something wrong with the server. Please try again later.</span>
-           </div>
-        {/if}
-    </section>
 </main>

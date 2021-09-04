@@ -32,9 +32,22 @@ export async function load({page, session, fetch}) {
 </script>
 
 <style>
+:global(a) {
+   color: var(--highlight-color);
+   text-decoration: none;
+}
+    
+:global(a:hover) {
+   color: var(--highlight-color-tint1);
+}
+    
 :global(ul){
     margin: 0;
     padding: 0;
+}
+    
+:global(h1,h2,h3,h4,h5,h6){
+    line-height: 1;
 }
 
 :global(input){

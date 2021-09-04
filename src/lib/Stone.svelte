@@ -29,13 +29,13 @@ svg{
     height: var(--stone-height);
 }
 
-circle:hover{
+.highlight-stone:hover{
     fill: var(--stone-hover-color);
 }
 </style>
 
 <svg viewBox="0 0 50 50" width="25" height="25">
       <title>Stone for Go</title>
-      <desc>Stones that is used in Go, {color} stone</desc>
+      <desc>{color} stone</desc>
       <circle class={`${color}-stone`} cx="25" cy="25" r="25" />
 </svg>

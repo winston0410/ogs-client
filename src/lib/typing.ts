@@ -1,5 +1,6 @@
 export interface LoadOutput<T> {
 	ok: boolean;
+    status: number;
 	value: T;
 }
 
@@ -13,6 +14,9 @@ export interface IPlayer {
 }
 
 export interface IGames {
+    count: number;
+    next: null;
+    previous: null;
 	results: Array<IGame>;
 }
 
@@ -111,7 +115,7 @@ interface ITournamentStarted extends _INotification {
 	tournamentname: string;
 }
 
-interface ITournamentInvitation extends _INotification {
+export interface ITournamentInvitation extends _INotification {
 	type: 'tournamentInvitation';
 	aux_delivered: number;
 	invitingUser: string;
@@ -124,16 +128,12 @@ interface ITournamentInvitation extends _INotification {
 	tournamentrqid: number;
 }
 
-type INotification =
+export type INotification =
 	| ITimeCop
 	| IGameEnded
 	| IGameStarted
 	| ITournamentStarted
 	| ITournamentInvitation;
-
-export interface INotifications {
-	result: Array<INotification>;
-}
 
 export enum StoneColor {
 	Black = "black",

@@ -1,5 +1,7 @@
 <script context="module" lang="ts">
 import { handleFetchError } from '$lib/fetch'
+import type {ITournamentInvitation, INotification} from '$lib/typing'
+import Card from "$lib/Card.svelte"
 const acceptInvitation = (id: number) => () => {
     fetch('/endpoints/tournament/notification', {
         method: "POST",
@@ -17,31 +19,27 @@ const acceptInvitation = (id: number) => () => {
 
 <script lang="ts">
 const currentTimestamp = new Date().getTime()
-export let notification
-console.log('check notificaiton', notification)
-let isExpired = currentTimestamp > notification.timestamp
-//  console.log('check time', isExpired)
+export let notification :ITournamentInvitation
+    console.log('chcek type', notification)
+const isExpired = (currentTimestamp > notification.timestamp) ? true : false;
 </script>
 
 <style>
-    .expired{
-        opacity: 0.5;
-    }
+.expired{
+    opacity: var(--opacity-3);
+}
 </style>
 
-{#if notification.type === "tournamentInvitation"}
-<div class={isExpired && "expired"}>
+<li class={isExpired && "expired"}>
+<Card>
+<div>
     <span>{notification.tournamentname}</span>
-    {#if isExpired }
-    <span class="">
-        <span>
-        Expired
-        </span>
-    </span>
-    {:else}
-    <button class="" on:click={acceptInvitation(notification.requestId)}>
+    {#if !isExpired }
+    <button class="" on:click={acceptInvitation(notification.tournamentrqid)}>
         <span>Accept</span>
     </button>
     {/if}
 </div>
-{/if}
+</Card>
+</li>
+

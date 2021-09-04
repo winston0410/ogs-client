@@ -1,13 +1,17 @@
 <script context="module" lang="ts">
-import type {LoadOutput, IGames, ITournaments} from '$lib/typing'
+import type {LoadOutput, IGames, IGame, ITournaments} from '$lib/typing'
+import EmptyCard from "./EmptyCard.svelte"
+import GameCard from "./GameCard.svelte"
 </script>
 
 <script lang="ts">
-import GameCard from "./GameCard.svelte"
-
 export let games: LoadOutput<IGames>
-console.log('check games', games)
+console.log('check game', games)
 export let tournaments: LoadOutput<ITournaments>
+let playedGames: Array<IGame> = [];
+if(games.ok){
+    playedGames = games.value.results.filter(item => item.ended)
+}
 </script>
 
 <style>
@@ -17,7 +21,7 @@ ul{
 }
 
 li{
-    opacity: 0.6;
+    opacity: var(--opacity-3);
 }
 
 li:not(:last-of-type){
@@ -26,13 +30,17 @@ li:not(:last-of-type){
 </style>
 
 {#if games.ok }
+{#if playedGames.length > 1}
 <ul role="list">
-    {#each games.value.results.filter(item => item.ended) as game}
+    {#each playedGames.filter(item => item.ended).reverse().slice(0, 9) as game}
             <li>
                 <GameCard game={game} />
             </li>
     {/each}
 </ul>
+{:else}
+    <EmptyCard message={"You haven't played any game yet."} />
+{/if}
 {:else}
    <div>
        <span>Something wrong with the server. Please try again later.</span>

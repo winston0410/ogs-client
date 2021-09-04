@@ -19,7 +19,7 @@
 
 /* space */
 :root{
-    --space-base-value: calc(var(--font-base-value) / 2);
+    --space-base-value: calc(var(--font-base-value) / 1.5);
     --xs-space: calc(var(--xs) * var(--space-base-value));
     --sm-space: calc(var(--sm) * var(--space-base-value));
     --md-space: calc(var(--md) * var(--space-base-value));
@@ -87,12 +87,13 @@
 
 /* opacity */
 :root{
-    --sm-opacity: 0.8;
+    --opacity-1: 0.8;
+    --opacity-2: 0.7;
+    --opacity-3: 0.6;
 }
 
 /* layout related */
 :root{
     --sidebar: 30%;
     --main: 70%;
-    --sectionYpadding: var(--xxl-space);
 }

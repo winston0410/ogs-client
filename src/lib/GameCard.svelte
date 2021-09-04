@@ -4,13 +4,12 @@ import {StoneColor} from '$lib/typing'
 import PlayerCard from '$lib/PlayerCard.svelte'
 import Heading from '$lib/Heading.svelte'
 import Stone from '$lib/Stone.svelte'
+import Card from '$lib/Card.svelte'
+import GameMetaData from '$lib/GameMetaData.svelte'
 </script>
 
 <script lang="ts">
 export let game: IGame
-    console.log('check game in game card', game)
-let isEnded: boolean = !game.ended
-console.log(isEnded)
 const getWinner = (game: IGame) => {
     if(game.black_lost && !game.white_lost){
         return StoneColor.White;
@@ -27,10 +26,7 @@ const getWinner = (game: IGame) => {
 <style>
     .game-details{
         display: grid;
-        grid-template-columns: minmax(0, 100%) 75px;
-        box-shadow: 0px 0px 3px 3px #eee;
-        padding: var(--sm-space) var(--md-space);
-        border-radius: var(--sm-radius);
+        grid-row-gap: var(--md-space);
     }
 
     .players-info{
@@ -68,28 +64,15 @@ const getWinner = (game: IGame) => {
         align-items: center;
         position: relative;
     }
-
-@media (min-width: 1200px){
-    .game-details{
-        padding: var(--lg-space) var(--xl-space);
-    }
-}
 </style>
 
-<div class="game-details">
-    <Heading size={3}>{game.name}</Heading>
-    <div class="players-info">
-        <PlayerCard color={StoneColor.Black} player={game.players.black} />
-        <PlayerCard color={StoneColor.White} player={game.players.white} />
-    </div>
-    {#if !game.ended }
-    <a class="result-container" target="_blank" rel="external" href={`https://online-go.com/game/${game.id}`}>
-        <Stone color={StoneColor.Highlight}/>
-        <span class="join-button-text">Join</span>
-    </a>
-    {:else}
-    <div class="result-container">
-        <Stone color={getWinner(game)}/>
-    </div>
-    {/if}
+<Card>
+<a class="game-details" target="_blank" rel="external" href={`https://online-go.com/game/${game.id}`}>
+<Heading tag={'h3'} size={3} margin={0}>{game.name}</Heading>
+<GameMetaData komi={game.komi} handicap={game.handicap} width={game.width} rule={game.rules}/>
+<div class="players-info">
+    <PlayerCard color={StoneColor.Black} player={game.players.black} />
+    <PlayerCard color={StoneColor.White} player={game.players.white} />
 </div>
+</a>
+</Card>
