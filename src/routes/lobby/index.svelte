@@ -1,28 +1,17 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
 export const load = getProps({ tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' })
+import Notification from '$lib/Notification.svelte'
+import GameHistoryList from '$lib/GameHistoryList.svelte'
+import GameCard from '$lib/GameCard.svelte'
+import Heading from '$lib/Heading.svelte'
 </script>
 
 <script lang="ts">
+const currentTime = new Date().getTime()
 export let tournament, game, notification
-console.log('check tournament', tournament.value.results, game.value)
-console.log('check notification', notification.value)
-import { handleFetchError } from '$lib/fetch'
-
-const acceptInvitation = (id: number) => () => {
-    console.log('clicking')
-    fetch('/endpoints/tournament/notification', {
-        method: "POST",
-        body: JSON.stringify({
-            request_id: id
-        })
-    }).then(handleFetchError).then(res => {
-        console.log('check res', res)
-    }).catch(e => {
-        //issue, handle missed tournament
-        console.log('check e', e)
-    })
-}
+console.log('check tournament', game)
+//  console.log('check notification', notification.value)
 </script>
 
 <svelte:head>
@@ -31,57 +20,41 @@ const acceptInvitation = (id: number) => () => {
 </svelte:head>
 
 <style>
-    .gamelist{
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    align-items: center;
-    flex-direction: column;
+main{
+padding: 0 var(--sm-space);
+}
+
+section{
+    margin-top: var(--md-space);
+}
+
+@media (min-width: 1200px){
+    main{
+        padding: 0 var(--xxl-space);
     }
-    .gamelist-list{
-        display: flex;
-        flex-direction: column;
-    }
+}
 </style>
 
-<div class="gamelist">
-    <section class="inprogress-gamelist">
-        <h2>Game in progress</h2>
-        {#if tournament.ok }
-        <ul class="gamelist-list" role="list">
-            {#each tournament.value.results as { name, handicap, description }}
-                <li>
-                    <div>
-                        <span>{name}</span>
-                        <!--  <a href={url}>  -->
-                            <!--  <span>{url}</span>  -->
-                        <!--  </a>  -->
-                    </div>
-                </li>
-            {/each}
-        </ul>
-        {:else}
-           <div>
-               <span>Something wrong with the server. Please try again later.</span>
-           </div>
-        {/if}
+<main>
+    {#if game.ok }
+    <section>
+        <Heading>Game in progress</Heading>
+        <GameCard game={game.value.results.find(item => !item.ended)}/>
     </section>
+    <section>
+        <Heading>Last 10 games result</Heading>
+        <GameHistoryList games={game} tournament={tournament}/>
+    </section>
+    {/if}
     
-    <section class="future-gamelist">
-    <h2>Game to play next</h2>
+    <section>
+    <Heading>Game to play next</Heading>
         {#if notification.ok }
         <ul class="gamelist-list" role="list">
-            {#each notification.value as { tournamentname:name, tournamentrqid: requestId, invitingUser, timestamp, type }}
-                {#if type === "tournamentInvitation"}
+            {#each notification.value as n}
                 <li>
-                    <div>
-                        <span>{name}</span>
-                        <button on:click={acceptInvitation(requestId)}>
-                            <span>Accept</span>
-                        </button>
-                    </div>
+                      <Notification notification={n} />
                 </li>
-                {/if}
             {/each}
         </ul>
         {:else}
@@ -90,4 +63,4 @@ const acceptInvitation = (id: number) => () => {
            </div>
         {/if}
     </section>
-</div>
+</main>

@@ -3,13 +3,52 @@ export interface LoadOutput<T> {
 	value: T;
 }
 
+export interface IPlayer {
+	country: string;
+	icon: string;
+	id: number;
+	professional: boolean;
+	ranking: number;
+	username: string;
+}
+
 export interface IGames {
 	results: Array<IGame>;
 }
 
-interface IGame {
+export interface IGame {
 	ended: null | string;
 	id: number;
+	name: string;
+	players: {
+		black: IPlayer;
+		white: IPlayer;
+	};
+	annulled: boolean;
+	black: number;
+	black_lost: boolean;
+	black_player_rank: number;
+	black_player_rating: string;
+	creator: number;
+	disable_analysis: false;
+	handicap: number;
+	height: number;
+	komi: string;
+	mode: string;
+	ranked: boolean;
+	rules: string;
+	source: string;
+	outcome: string;
+	pause_on_weekends: boolean;
+	started: string;
+	time_control: string;
+	time_per_move: number;
+	tournament_round: number;
+	white: number;
+	white_lost: boolean;
+	white_player_rank: number;
+	white_player_rating: string;
+	width: number;
 }
 
 export interface ITournaments {
@@ -94,4 +133,11 @@ type INotification =
 
 export interface INotifications {
 	result: Array<INotification>;
+}
+
+export enum StoneColor {
+	Black = "black",
+	White = "white",
+    Grey = "grey",
+	Highlight = "highlight"
 }

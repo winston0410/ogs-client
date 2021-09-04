@@ -1,7 +1,10 @@
 @import 'modern-css-reset';
 
 :root{
-    --xs: 0.714;
+    /* 1.2 ratio */
+    --xxs: 0.694;
+    --xs: 0.833;
+    /* 1.4 ratio */
     --sm: 1;
     --md: 1.4;
     --lg: 1.96;
@@ -11,7 +14,7 @@
 
 /* container-width */
 :root{
-    --container-width: 1024px;
+    --container-width: 2048px;
 }
 
 /* space */
@@ -27,27 +30,35 @@
 
 /* font-family */
 :root {
-    --display-font: VT323;
+    /* --display-font: neoneon; */
+    --display-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --content-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* font-size */
 :root{
     --font-base-value: 16px;
+    --xxs-font: calc(var(--xxs) * var(--font-base-value));
     --xs-font: calc(var(--xs) * var(--font-base-value));
     --sm-font: calc(var(--sm) * var(--font-base-value));
     --md-font: calc(var(--md) * var(--font-base-value));
     --lg-font: calc(var(--lg) * var(--font-base-value));
     --xl-font: calc(var(--xl) * var(--font-base-value));
+    --xxl-font: calc(var(--xxl) * var(--font-base-value));
 }
 
 /* color */
 :root{
+    --base-color-shade1: hsla(50, 10%, 10%, 1);
     --base-color: hsla(50, 10%, 11%, 1);
     --base-contrast-color: hsla(50, 5%, 90%, 1);
     --highlight-color: hsla(45, 98%, 50%, 1);
-    --highlight-tint1-color: hsla(45, 98%, 75%, 1);
-    --highlight-tint2-color: hsla(45, 98%, 85%, 1);
+    --highlight-color-tint1: hsla(45, 98%, 75%, 1);
+    --highlight-color-tint2: hsla(45, 98%, 85%, 1);
+    --stone-black-color: hsla(0, 0%, 5%, 1);
+    --stone-highlight-color: hsla(45, 98%, 50%, 1);
+    --stone-white-color: hsla(0, 0%, 95%, 1);
+    --stone-grey-color: hsla(0, 0%, 70%, 1);
 }
 
 /* border-radius */
@@ -60,8 +71,28 @@
     --xl-radius: calc(var(--xl) * var(--radius-base-value));
 }
 
-/* layout */
+/* animation delay */
+:root{
+    --time-base-value: 500ms;
+    --time-1: var(--time-base-value);
+    --time-2: calc(2 * var(--time-base-value));
+    --time-3: calc(3 * var(--time-base-value));
+    --time-4: calc(4 * var(--time-base-value));
+    --time-5: calc(5 * var(--time-base-value));
+    --time-6: calc(6 * var(--time-base-value));
+    --time-7: calc(7 * var(--time-base-value));
+    --time-8: calc(8 * var(--time-base-value));
+    --time-9: calc(9 * var(--time-base-value));
+}
+
+/* opacity */
+:root{
+    --sm-opacity: 0.8;
+}
+
+/* layout related */
 :root{
     --sidebar: 30%;
     --main: 70%;
+    --sectionYpadding: var(--xxl-space);
 }

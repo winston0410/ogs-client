@@ -76,6 +76,11 @@ display: flex;
       justify-content: center;
       flex-direction: column;
       width: 100%;
+      max-width: 568px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #eee;
+      padding: var(--xxl-space);
   }
 
   .login-form-label{

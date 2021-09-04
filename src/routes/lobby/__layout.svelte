@@ -1,12 +1,11 @@
 <script context="module" lang="ts">
 import { getProps } from '../../lib/helper'
-export const load = getProps({ _user: '/endpoints/user' })
+export const load = getProps({ user: '/endpoints/user' })
 </script>
 
 <script lang="ts">
 import Header from '$lib/Header.svelte'
-export let _user
-export const user = _user.value
+export let user
 </script>
 
 <style>
@@ -24,6 +23,6 @@ export const user = _user.value
 </style>
 
 <div class="container">
-<Header user={user}/>
+<Header user={user.ok ? user.value : {}}/>
 <slot></slot>
 </div>

@@ -1,26 +1,19 @@
 <script lang="ts">
 import LogoutButton from '$lib/LogoutButton.svelte'
 import { onMount } from 'svelte';
-import { headerOffset } from '/src/store'
+import resizeObserver from 'svelte-use-resize-observer'
 export let user
 let height
 
-const setHeaderOffset = () => {
-    headerOffset.set(height)
-    document.documentElement.style.setProperty('--headerOffset', `${$headerOffset}px`);
+const handleResize = (e) => {
+    const elem = e.detail.entries[0]
+    const cr = elem.contentRect
+    document.documentElement.style.setProperty('--headerOffset', `${cr.top + cr.bottom}px`);
 }
-
-onMount(() => {
-    setHeaderOffset()
-    window.addEventListener('resize', setHeaderOffset);
-    return () => {
-        window.removeEventListener('resize', setHeaderOffset);
-    }
-})
 </script>
 
 <style>
-    .header{
+    header{
         position: fixed;
         left: 0px;
         right: 0px;
@@ -33,7 +26,7 @@ onMount(() => {
     }
 
 @media (min-width: 1200px) {
-   .header{
+   header{
         position: static;
         height:100vh;
         flex-direction: column;
@@ -42,7 +35,7 @@ onMount(() => {
 }
 </style>
 
-<header bind:clientHeight={height} class="header">
+<header use:resizeObserver on:resize={handleResize}>
     <div class="profile">
         <span class="profile-name">{user.username}</span>
         <span class="profile-rank">{Math.floor(user.ranking)}k</span>

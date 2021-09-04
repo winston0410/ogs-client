@@ -1,6 +1,7 @@
 const domain = "https://online-go.com"
 
 export default {
+    domain: domain,
     group: `${domain}/api/v1/megroups`,
     game: `${domain}/api/v1/megames`,
     user: `${domain}/api/v1/me`,
