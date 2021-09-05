@@ -13,7 +13,6 @@ export const load = async ({ fetch }) => {
 import Header from '$lib/Header.svelte'
 import { currentUser } from "/src/store"
 export let user
-console.log('check user', user)
 if(user.ok){
     currentUser.set(user.value)
 }

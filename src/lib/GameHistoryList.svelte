@@ -6,8 +6,6 @@ import GameCard from "./GameCard.svelte"
 
 <script lang="ts">
 export let games: LoadOutput<IGames>
-console.log('check game', games)
-export let tournaments: LoadOutput<ITournaments>
 let playedGames: Array<IGame> = [];
 if(games.ok){
     playedGames = games.value.results.filter(item => item.ended)

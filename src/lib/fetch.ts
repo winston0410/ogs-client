@@ -17,7 +17,7 @@ export const catched = async <Output>(cb: Callback<Output>): Promise<EndpointOut
       const body = await e.json()
       return {
           status: e.status,
-          body
+          body: body
       }
     }
 }

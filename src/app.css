@@ -49,15 +49,15 @@
 
 /* color */
 :root{
-    --base-color-shade1: hsla(50, 10%, 10%, 1);
-    --base-color: hsla(50, 10%, 11%, 1);
-    --base-contrast-color: hsla(50, 5%, 90%, 1);
-    --highlight-color: hsla(45, 98%, 50%, 1);
-    --highlight-color-tint1: hsla(45, 98%, 75%, 1);
-    --highlight-color-tint2: hsla(45, 98%, 85%, 1);
+    --base-color-shade1: hsla(0, 0%, 95%, 1);
+    --base-color: var(--stone-white-color);
+    --base-contrast-color: var(--stone-black-color);
+    --highlight-color: hsla(45, 98%, 35%, 1);
+    --highlight-color-tint1: hsla(45, 98%, 45%, 1);
+    --highlight-color-tint2: hsla(45, 98%, 50%, 1);
     --stone-black-color: hsla(0, 0%, 5%, 1);
     --stone-highlight-color: hsla(45, 98%, 50%, 1);
-    --stone-white-color: hsla(0, 0%, 95%, 1);
+    --stone-white-color: hsla(0, 0%, 96%, 1);
     --stone-grey-color: hsla(0, 0%, 70%, 1);
 }
 

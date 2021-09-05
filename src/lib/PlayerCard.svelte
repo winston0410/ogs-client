@@ -1,12 +1,14 @@
 <script context="module" lang="ts">
-import type {IGame, IPlayer, StoneColor} from '$lib/typing'
+import type {IPlayer, StoneColor} from '$lib/typing'
 import endpoints from '/src/endpoints'
 import Stone from '$lib/Stone.svelte'
 </script>
 
 <script lang="ts">
+import { currentUser } from "/src/store"
 export let player: IPlayer
 export let color: StoneColor
+const matched = $currentUser.username === player.username
 </script>
 
 <style>
@@ -17,9 +19,13 @@ export let color: StoneColor
     .name{
         margin-left: var(--sm-space);
     }
+
+    .current{
+        font-weight: 700;
+    }
 </style>
 
 <div class="card">
     <Stone color={color} />
-    <a class="name" rel="external" href={`${endpoints.domain}/player/${player.id}`}><span>{player.username}({Math.floor(player.ranking)})</span></a>
+    <a class={`name ${matched ? "current" : ""}`} rel="external" href={`${endpoints.domain}/player/${player.id}`}><span>{player.username}({Math.floor(player.ranking)})</span></a>
 </div>

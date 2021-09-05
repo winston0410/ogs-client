@@ -1,25 +1,28 @@
 export interface LoadOutput<T> {
 	ok: boolean;
-    status: number;
+	status: number;
 	value: T;
 }
 
-export interface IUser {
-about: string
-id: number
-ranking: number
-username: string
-//  account_settings: "/api/v1/meaccount_settings"
-//  challenges: "/api/v1/mechallenges"
-//  friends: "/api/v1/mefriends"
-//  games: "/api/v1/megames"
-//  groups: "/api/v1/megroups"
-//  mail: "/api/v1/memail"
-//  notifications: "/api/v1/menotifications"
-//  ratings: {version: 5, overall: {…}}
-//  settings: "/api/v1/mesettings"
-//  tournaments: "/api/v1/metournaments"
-//  vacation: "/api/v1/mevacation"
+export interface ICurrentUser {
+	about: string;
+	id: number;
+	ranking: number;
+	username: string;
+}
+
+export interface IUser extends ICurrentUser {
+	icon: string;
+	professional: boolean;
+	country: string;
+	language: string;
+	supporter: boolean;
+	is_bot: boolean;
+	website: string;
+	registration_date: string;
+	name: null | string;
+	timeout_provisional: boolean;
+	is_friend: boolean;
 }
 
 export interface IPlayer {
@@ -31,10 +34,17 @@ export interface IPlayer {
 	username: string;
 }
 
+export interface ITournaments {
+	count: number;
+	next: null;
+	previous: null;
+	results: Array<ITournament>;
+}
+
 export interface IGames {
-    count: number;
-    next: null;
-    previous: null;
+	count: number;
+	next: null;
+	previous: null;
 	results: Array<IGame>;
 }
 
@@ -73,8 +83,66 @@ export interface IGame {
 	width: number;
 }
 
-export interface ITournaments {
-	results: Array<null>;
+export interface IGroup {
+	id: number;
+	name: string;
+	summary: string;
+	require_invitation: boolean;
+	is_public: boolean;
+	hide_details: boolean;
+	member_count: number;
+	icon: string;
+}
+
+export interface ITournament {
+	id: number;
+	name: string;
+	//  director: {}
+	description: string;
+	schedule: null;
+	title: null;
+	tournament_type: string;
+	handicap: number;
+	rules: string;
+	is_open: boolean;
+	exclude_provisional: boolean;
+	group: IGroup;
+	time_start: string;
+	//  "time_control_parameters": {
+	//  "system": "fischer",
+	//  "time_control": "fischer",
+	//  "speed": "correspondence",
+	//  "time_increment": 86400,
+	//  "initial_time": 259200,
+	//  "max_time": 604800
+	//  },
+	//  "player_is_member_of_group": true,
+	//  "auto_start_on_max": false,
+	//  "time_start": "2021-11-04T05:00:00-04:00",
+	//  "players_start": 4,
+	//  "first_pairing_method": "slide",
+	//  "subsequent_pairing_method": "slaughter",
+	//  "min_ranking": 5,
+	//  "max_ranking": 38,
+	//  "analysis_enabled": true,
+	//  "exclusivity": "open",
+	//  "started": null,
+	//  "ended": null,
+	//  "start_waiting": null,
+	//  "board_size": 19,
+	//  "active_round": null,
+	//  "settings": {
+	//  "maximum_players": 100,
+	//  "num_rounds": 3,
+	//  "upper_bar": "20",
+	//  "lower_bar": "10",
+	//  "active_round": null
+	//  },
+	//  "rounds": null,
+	//  "icon": "https://cdn.online-go.com/5.1/img/default-group-v5.svg",
+	//  "scheduled_rounds": false,
+	//  "can_administer": true,
+	//  "opengotha_standings": null
 }
 
 interface _INotification {
@@ -154,8 +222,8 @@ export type INotification =
 	| ITournamentInvitation;
 
 export enum StoneColor {
-	Black = "black",
-	White = "white",
-    Grey = "grey",
-	Highlight = "highlight"
+	Black = 'black',
+	White = 'white',
+	Grey = 'grey',
+	Highlight = 'highlight'
 }

@@ -2,24 +2,27 @@
 import { batchFetch } from '../../lib/helper'
 import type {IGame} from '$lib/typing'
 export const load = async ({ fetch }) => {
+    fetch("/endpoints/tournament/notification/auto-accept", {
+        method: "POST"
+    }).then(res => {
+        console.log('check res', res.json())
+    })
  return {
     props: {
-        ... (await batchFetch(fetch, { tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' }))
+        ... (await batchFetch(fetch, { tournament: '/endpoints/tournament', game: '/endpoints/game' }))
     }
   }
 }
 import GameHistoryList from '$lib/GameHistoryList.svelte'
+import FutureGameList from '$lib/FutureGameList.svelte'
 import GameCard from '$lib/GameCard.svelte'
 import EmptyCard from "$lib/EmptyCard.svelte"
 import Heading from '$lib/Heading.svelte'
-import NotificationList from "$lib/NotificationList.svelte"
 </script>
 
 <script lang="ts">
 const currentTime = new Date().getTime()
-export let tournament, game, notification
-console.log('check tournament', notification)
-//  console.log('check notification', notification.value)
+export let tournament, game 
 const currentGame = game.value.results.find((item: IGame) => !item.ended)
 </script>
 
@@ -64,11 +67,11 @@ section:not(:last-of-type){
     </section>
     <section>
     <Heading>Game to play next</Heading>
-       <NotificationList notifications={notification}/>
+        <FutureGameList tournaments={tournament} />
     </section>
     <section>
         <Heading>Last 10 games result</Heading>
-        <GameHistoryList games={game} tournaments={tournament}/>
+        <GameHistoryList games={game} />
     </section>
     {/if}
 </main>
