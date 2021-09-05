@@ -1,21 +1,26 @@
 <script context="module" lang="ts">
-import { getProps } from '../../lib/helper'
-export const load = getProps({ tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' })
+import { batchFetch } from '../../lib/helper'
+import type {IGame} from '$lib/typing'
+export const load = async ({ fetch }) => {
+ return {
+    props: {
+        ... (await batchFetch(fetch, { tournament: '/endpoints/tournament', game: '/endpoints/game', notification: '/endpoints/notification' }))
+    }
+  }
+}
 import GameHistoryList from '$lib/GameHistoryList.svelte'
 import GameCard from '$lib/GameCard.svelte'
 import EmptyCard from "$lib/EmptyCard.svelte"
 import Heading from '$lib/Heading.svelte'
+import NotificationList from "$lib/NotificationList.svelte"
 </script>
 
 <script lang="ts">
-import NotificationList from "$lib/NotificationList.svelte"
-
-
 const currentTime = new Date().getTime()
 export let tournament, game, notification
-console.log('check tournament', game)
+console.log('check tournament', notification)
 //  console.log('check notification', notification.value)
-const currentGame = game.value.results.find(item => !item.ended)
+const currentGame = game.value.results.find((item: IGame) => !item.ended)
 </script>
 
 <svelte:head>

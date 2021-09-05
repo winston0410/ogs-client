@@ -1,12 +1,19 @@
 <script context="module" lang="ts">
-import { getProps } from '../../lib/helper'
-export const load = getProps({ user: '/endpoints/user' })
+import { batchFetch } from '../../lib/helper'
+export const load = async ({ fetch }) => {
+ return {
+    props: {
+        ... (await batchFetch(fetch, { user: '/endpoints/user' }))
+    }
+  }
+}
 </script>
 
 <script lang="ts">
 import Header from '$lib/Header.svelte'
 import { currentUser } from "/src/store"
 export let user
+console.log('check user', user)
 if(user.ok){
     currentUser.set(user.value)
 }

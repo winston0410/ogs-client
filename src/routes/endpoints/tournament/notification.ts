@@ -2,7 +2,7 @@ import type { RequestHandler } from '@sveltejs/kit'
 import { handleFetchError, catched } from '$lib/fetch'
 import endpoints from '/src/endpoints'
 
-const getNotification = async (token:string, body:string) => {
+const acceptNotfication = async (token:string, body:string) => {
     return fetch(endpoints.joinTournament, {
         method: "POST",
         headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
@@ -14,7 +14,7 @@ const getNotification = async (token:string, body:string) => {
 
 export const post: RequestHandler<{ accessToken: string }, string> = async (req) => {
     return await catched(async () => {
-        const data = await getNotification(req.locals.accessToken, req.body)
+        const data = await acceptNotfication(req.locals.accessToken, req.body)
         return {
             body: data
         }

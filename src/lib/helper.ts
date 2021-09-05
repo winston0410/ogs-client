@@ -8,13 +8,13 @@ interface PromiseTable<T> {
 	[key: string]: Promise<T>;
 }
 
-interface ResolvedResponse<T> {
+export interface ResolvedResponse<T> {
 	ok: true;
 	status: number;
 	value: T;
 }
 
-interface RejectedResponse {
+export interface RejectedResponse {
 	ok: false;
 	status: number;
 	reason: string;
@@ -24,12 +24,15 @@ interface UnwrappedTable<T> {
 	[key: string]: ResolvedResponse<T> | RejectedResponse;
 }
 
-const allFetchSettled = <T>(t: PromiseTable<Promise<Response>>): Promise<UnwrappedTable<T>> => {
+export type IFetch = (info: RequestInfo, init?: RequestInit) => Promise<Response>;
+
+const allFetchSettled = <T>(t: PromiseTable<Response>): Promise<UnwrappedTable<T>> => {
 	const result = {};
 	let index = 0;
 	return new Promise((resolve) => {
 		for (const key in t) {
 			Promise.resolve(t[key])
+                .then(handleFetchError)
 				.then(async (res) => {
 					result[key] = { ok: true, status: res.status, value: await res.json() };
 					index++;
@@ -47,17 +50,14 @@ const allFetchSettled = <T>(t: PromiseTable<Promise<Response>>): Promise<Unwrapp
 	});
 };
 
-const getProps =
-	<T>(props: Props) =>
-	async ({ fetch }) => {
-		const wrapped = {};
-		for (const key in props) {
-			wrapped[key] = fetch(props[key]).then(handleFetchError)
-		}
+//  fetch in batch and return an object for props in sveltekit
+const batchFetch = async <T>(fetch: IFetch, props: Props): Promise<UnwrappedTable<T>> => {
+	const wrapped = {};
+	for (const key in props) {
+		wrapped[key] = fetch(props[key])
+	}
 
-		const unwrapped = await allFetchSettled<T>(wrapped);
+	return allFetchSettled<T>(wrapped);
+};
 
-		return { props: unwrapped };
-	};
-
-export { getProps };
+export { batchFetch, allFetchSettled };

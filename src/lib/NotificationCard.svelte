@@ -20,7 +20,6 @@ const acceptInvitation = (id: number) => () => {
 <script lang="ts">
 const currentTimestamp = new Date().getTime()
 export let notification :ITournamentInvitation
-    console.log('chcek type', notification)
 const isExpired = (currentTimestamp > notification.timestamp) ? true : false;
 </script>
 

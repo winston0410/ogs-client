@@ -4,6 +4,24 @@ export interface LoadOutput<T> {
 	value: T;
 }
 
+export interface IUser {
+about: string
+id: number
+ranking: number
+username: string
+//  account_settings: "/api/v1/meaccount_settings"
+//  challenges: "/api/v1/mechallenges"
+//  friends: "/api/v1/mefriends"
+//  games: "/api/v1/megames"
+//  groups: "/api/v1/megroups"
+//  mail: "/api/v1/memail"
+//  notifications: "/api/v1/menotifications"
+//  ratings: {version: 5, overall: {…}}
+//  settings: "/api/v1/mesettings"
+//  tournaments: "/api/v1/metournaments"
+//  vacation: "/api/v1/mevacation"
+}
+
 export interface IPlayer {
 	country: string;
 	icon: string;
