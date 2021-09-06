@@ -1,9 +1,19 @@
 <script context="module" lang="ts">
-import { batchFetch } from '../../lib/helper'
+import { batchFetch } from '$lib/helper'
+import { handleFetchError } from '$lib/fetch'
+import createFetch from 'wrapped-fetch'
+import type { UnwrappedResponse } from 'wrapped-fetch'
+import type { IGames, IUser } from '$lib/typing';
+
 export const load = async ({ fetch }) => {
+    const f = createFetch(fetch)
+    const user = await f('/endpoints/user', {}).catch(async (e) => {
+      console.log('check e', e, e.status, await e.json())
+    })
  return {
     props: {
-        ... (await batchFetch(fetch, { user: '/endpoints/user' }))
+      user: user,
+      games: await f('/endpoints/game', {})
     }
   }
 }
@@ -11,10 +21,13 @@ export const load = async ({ fetch }) => {
 
 <script lang="ts">
 import Header from '$lib/Header.svelte'
-import { currentUser } from "/src/store"
-export let user
+import { currentUser, gameList } from "/src/store"
+export let user: UnwrappedResponse<IUser>, games: UnwrappedResponse<IGames>
 if(user.ok){
-    currentUser.set(user.value)
+    currentUser.set(user.body)
+}
+if(games.ok){
+    gameList.set(games)
 }
 </script>
 

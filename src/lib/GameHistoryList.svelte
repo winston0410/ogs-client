@@ -1,14 +1,15 @@
 <script context="module" lang="ts">
-import type {LoadOutput, IGames, IGame, ITournaments} from '$lib/typing'
+import type {IGames, IGame, ITournaments} from '$lib/typing'
 import EmptyCard from "./EmptyCard.svelte"
 import GameCard from "./GameCard.svelte"
+import type { UnwrappedResponse } from 'wrapped-fetch'
 </script>
 
 <script lang="ts">
-export let games: LoadOutput<IGames>
+export let games: UnwrappedResponse<IGames>
 let playedGames: Array<IGame> = [];
 if(games.ok){
-    playedGames = games.value.results.filter(item => item.ended)
+    playedGames = games.body.results.filter(item => item.ended)
 }
 </script>
 

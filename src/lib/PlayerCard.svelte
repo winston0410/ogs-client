@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 import type {IPlayer, StoneColor} from '$lib/typing'
+import { getRanking } from '$lib/helper'
 import endpoints from '/src/endpoints'
 import Stone from '$lib/Stone.svelte'
 </script>
@@ -27,5 +28,5 @@ const matched = $currentUser.username === player.username
 
 <div class="card">
     <Stone color={color} />
-    <a class={`name ${matched ? "current" : ""}`} rel="external" href={`${endpoints.domain}/player/${player.id}`}><span>{player.username}({Math.floor(player.ranking)})</span></a>
+    <a class={`name ${matched ? "current" : ""}`} rel="external" href={`${endpoints.domain}/player/${player.id}`}><span>{player.username}({getRanking(player.ranking)})</span></a>
 </div>

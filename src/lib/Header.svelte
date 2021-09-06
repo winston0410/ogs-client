@@ -4,6 +4,7 @@ import Heading from '$lib/Heading.svelte'
 import endpoints from "/src/endpoints";
 import resizeObserver from 'svelte-use-resize-observer'
 import type { IUser } from '$lib/typing';
+import { getRanking } from '$lib/helper';
 </script>
 
 <script lang="ts">
@@ -16,6 +17,9 @@ const handleResize = (e) => {
 }
 
 const getLargeIconUrl = (url: string):string => {
+    if(!url){
+        return ""
+    }
     const modifiedUrl = new URL(url);
     if(modifiedUrl.host !== "secure.gravatar.com"){
         return url
@@ -24,9 +28,6 @@ const getLargeIconUrl = (url: string):string => {
     return modifiedUrl.toString()
 }
 
-const getRanking = (ranking: number): string => {
-    return `${Math.floor(ranking)}k`
-}
 </script>
 
 <style>

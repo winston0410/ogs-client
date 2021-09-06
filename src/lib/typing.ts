@@ -1,9 +1,3 @@
-export interface LoadOutput<T> {
-	ok: boolean;
-	status: number;
-	value: T;
-}
-
 export interface ICurrentUser {
 	about: string;
 	id: number;
@@ -70,7 +64,7 @@ export interface IGame {
 	ranked: boolean;
 	rules: string;
 	source: string;
-	outcome: string;
+	outcome: "Timeout" | "Resignation";
 	pause_on_weekends: boolean;
 	started: string;
 	time_control: string;

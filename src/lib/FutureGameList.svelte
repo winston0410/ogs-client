@@ -1,15 +1,16 @@
 <script context="module" lang="ts">
-import type {LoadOutput, ITournaments, ITournament} from '$lib/typing'
+import type {ITournaments, ITournament} from '$lib/typing'
 import EmptyCard from "./EmptyCard.svelte"
 import FutureGameCard from "./FutureGameCard.svelte"
+import type { UnwrappedResponse } from 'wrapped-fetch'
 </script>
 
 <script lang="ts">
-export let tournaments: LoadOutput<ITournaments>
+export let tournaments: UnwrappedResponse<ITournaments>
 let futureTournaments: Array<ITournament> = [];
 const ts = new Date().getTime()
 if(tournaments.ok){
-    futureTournaments = tournaments.value.results.filter(item => {
+    futureTournaments = tournaments.body.results.filter(item => {
         return ts < new Date(item.time_start).getTime()
     })
 }

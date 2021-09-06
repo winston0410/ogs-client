@@ -26,7 +26,7 @@ interface UnwrappedTable<T> {
 
 export type IFetch = (info: RequestInfo, init?: RequestInit) => Promise<Response>;
 
-const allFetchSettled = <T>(t: PromiseTable<Response>): Promise<UnwrappedTable<T>> => {
+export const allFetchSettled = <T>(t: PromiseTable<Response>): Promise<UnwrappedTable<T>> => {
 	const result = {};
 	let index = 0;
 	return new Promise((resolve) => {
@@ -51,7 +51,7 @@ const allFetchSettled = <T>(t: PromiseTable<Response>): Promise<UnwrappedTable<T
 };
 
 //  fetch in batch and return an object for props in sveltekit
-const batchFetch = async <T>(fetch: IFetch, props: Props): Promise<UnwrappedTable<T>> => {
+export const batchFetch = async <T>(fetch: IFetch, props: Props): Promise<UnwrappedTable<T>> => {
 	const wrapped = {};
 	for (const key in props) {
 		wrapped[key] = fetch(props[key])
@@ -60,4 +60,12 @@ const batchFetch = async <T>(fetch: IFetch, props: Props): Promise<UnwrappedTabl
 	return allFetchSettled<T>(wrapped);
 };
 
-export { batchFetch, allFetchSettled };
+
+export const getRanking = (ranking: number): string => {
+    return `${Math.floor(ranking)}k`
+}
+
+//  export const createSFetch(wrappedFetch: Fetch) => {
+    //  const f = wrappedFetch ? wrappedFetch : window.fetch
+    //  return
+//  }

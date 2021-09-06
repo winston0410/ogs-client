@@ -1,15 +1,18 @@
 <script context="module" lang="ts">
-import { batchFetch } from '../../lib/helper'
-import type {IGame} from '$lib/typing'
+import type {IGames, ITournaments} from '$lib/typing'
+import type { UnwrappedResponse } from 'wrapped-fetch'
+import createFetch from 'wrapped-fetch'
+
 export const load = async ({ fetch }) => {
-    fetch("/endpoints/tournament/notification/auto-accept", {
+    const f = createFetch(fetch)
+    f("/endpoints/tournament/notification/auto-accept", {
         method: "POST"
     }).then(res => {
-        console.log('check res', res.json())
+        console.log('check res', res)
     })
  return {
     props: {
-        ... (await batchFetch(fetch, { tournament: '/endpoints/tournament', game: '/endpoints/game' }))
+        tournaments: await f('/endpoints/tournament'),
     }
   }
 }
@@ -21,9 +24,11 @@ import Heading from '$lib/Heading.svelte'
 </script>
 
 <script lang="ts">
+import { gameList } from "/src/store"
 const currentTime = new Date().getTime()
-export let tournament, game 
-const currentGame = game.value.results.find((item: IGame) => !item.ended)
+console.log('check gamelist', $gameList)
+export let tournaments: UnwrappedResponse<ITournaments>
+const currentGame = $gameList.body?.results.find((item) => !item.ended)
 </script>
 
 <svelte:head>
@@ -56,7 +61,7 @@ section:not(:last-of-type){
 </style>
 
 <main>
-    {#if game.ok }
+    {#if $gameList.ok }
     <section>
         <Heading>Game in progress</Heading>
     {#if currentGame}
@@ -67,11 +72,11 @@ section:not(:last-of-type){
     </section>
     <section>
     <Heading>Game to play next</Heading>
-        <FutureGameList tournaments={tournament} />
+        <FutureGameList tournaments={tournaments} />
     </section>
     <section>
         <Heading>Last 10 games result</Heading>
-        <GameHistoryList games={game} />
+        <GameHistoryList games={$gameList} />
     </section>
     {/if}
 </main>

@@ -27,6 +27,7 @@ specifiers:
   svelte-use-resize-observer: ^1.0.2
   tslib: ^2.3.1
   typescript: ^4.3.5
+  wrapped-fetch: github:winston0410/wrapped-fetch
   yup: ^0.32.9
 
 dependencies:
@@ -36,11 +37,12 @@ dependencies:
   felte: 0.8.0_svelte@3.42.4
   modern-css-reset: 1.4.0
   svelte-use-resize-observer: 1.0.2
+  wrapped-fetch: github.com/winston0410/wrapped-fetch/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4
   yup: 0.32.9
 
 devDependencies:
   '@sveltejs/adapter-vercel': 1.0.0-next.28
-  '@sveltejs/kit': 1.0.0-next.162_svelte@3.42.4
+  '@sveltejs/kit': 1.0.0-next.164_svelte@3.42.4
   '@types/cookie': 0.4.1
   '@typescript-eslint/eslint-plugin': 4.30.0_8a8a2d3eaa9257455a03c16dce5f55b3
   '@typescript-eslint/parser': 4.30.0_eslint@7.32.0+typescript@4.4.2
@@ -184,14 +186,14 @@ packages:
       esbuild: 0.12.25
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.162_svelte@3.42.4:
-    resolution: {integrity: sha512-fLJNGXeTFtwy1p91mWh+Sr+wgi0vEPgXN0uIUvofzQSNp7MDwxw2noDCogyHgxHhU3uDf2+Osz3aJC2fCsbIbw==}
+  /@sveltejs/kit/1.0.0-next.164_svelte@3.42.4:
+    resolution: {integrity: sha512-ohtOWAlOhvdN0wJZjJbpLzbruyBcH0KoTxb+OBXb4UUPXIJYfOw9qSPSZcG4JQFVm4DbxK1tY4RcdOw2gONWEA==}
     engines: {node: ^12.20 || >=14.13}
     hasBin: true
     peerDependencies:
       svelte: ^3.39.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.21_svelte@3.42.4+vite@2.5.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.22_svelte@3.42.4+vite@2.5.3
       cheap-watch: 1.0.3
       sade: 1.7.4
       svelte: 3.42.4
@@ -201,8 +203,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.21_svelte@3.42.4+vite@2.5.3:
-    resolution: {integrity: sha512-JjPnoQoI1+VXHjguE1bWyFYdZvPN6VTZ5RsFRpju45zICas1N5jAuOqKTbhQ1G+eEMCbhhB6zjZgQQRtaXPhNQ==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.22_svelte@3.42.4+vite@2.5.3:
+    resolution: {integrity: sha512-B1O/GMIxpE4iJ3/FBUJ3oYGKHhJ99G9uFARsb8kVeReLDPhtZGXTM+7brLDefJuedbKkRkGEEkbGOVuEuEBo3g==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
@@ -1742,4 +1744,12 @@ packages:
       nanoclone: 0.2.1
       property-expr: 2.0.4
       toposort: 2.0.2
+    dev: false
+
+  github.com/winston0410/wrapped-fetch/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4:
+    resolution: {tarball: https://codeload.github.com/winston0410/wrapped-fetch/tar.gz/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4}
+    name: wrapped-fetch
+    version: 1.0.0
+    prepare: true
+    requiresBuild: true
     dev: false
