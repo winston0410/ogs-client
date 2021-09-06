@@ -3,12 +3,14 @@ import LogoutButton from '$lib/LogoutButton.svelte'
 import Heading from '$lib/Heading.svelte'
 import endpoints from "/src/endpoints";
 import resizeObserver from 'svelte-use-resize-observer'
-import type { IUser } from '$lib/typing';
+import type { IUser, IGames } from '$lib/typing';
 import { getRanking } from '$lib/helper';
+import type { UnwrappedResponse } from "wrapped-fetch"
 </script>
 
 <script lang="ts">
 export let user: IUser
+export let gameList: UnwrappedResponse<IGames>
 
 const handleResize = (e) => {
     const elem = e.detail.entries[0]

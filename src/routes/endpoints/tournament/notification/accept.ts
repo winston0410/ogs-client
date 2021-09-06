@@ -1,22 +1,21 @@
-import type { RequestHandler } from '@sveltejs/kit'
-import { handleFetchError, catched } from '$lib/fetch'
-import endpoints from '/src/endpoints'
+import type { RequestHandler } from '@sveltejs/kit';
+import endpoints from '/src/endpoints';
+import createFetch from 'wrapped-fetch';
+import type { UnwrappedResponse } from 'wrapped-fetch';
 
-const acceptNotfication = async (token:string, body:string) => {
-    return fetch(endpoints.joinTournament, {
-        method: "POST",
-        headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
-        body: body
-    }).then(handleFetchError).then(res => {
-        return res.json()
-    })
-}
+const acceptNotfication = async (token: string, body: string) => {
+	const f = createFetch();
+	return f(endpoints.joinTournament, {
+		method: 'POST',
+		headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+		body: body
+	});
+};
 
 export const post: RequestHandler<{ accessToken: string }, string> = async (req) => {
-    return await catched(async () => {
-        const data = await acceptNotfication(req.locals.accessToken, req.body)
-        return {
-            body: data
-        }
-    })
-}
+	try {
+		return await acceptNotfication(req.locals.accessToken, req.body);
+	} catch (e) {
+		console.log(e);
+	}
+};

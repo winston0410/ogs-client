@@ -64,7 +64,7 @@ export interface IGame {
 	ranked: boolean;
 	rules: string;
 	source: string;
-	outcome: "Timeout" | "Resignation";
+	outcome: 'Timeout' | 'Resignation';
 	pause_on_weekends: boolean;
 	started: string;
 	time_control: string;
@@ -123,7 +123,7 @@ export interface ITournament {
 	//  "started": null,
 	//  "ended": null,
 	//  "start_waiting": null,
-	//  "board_size": 19,
+	board_size: number;
 	//  "active_round": null,
 	//  "settings": {
 	//  "maximum_players": 100,

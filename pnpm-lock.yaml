@@ -37,7 +37,7 @@ dependencies:
   felte: 0.8.0_svelte@3.42.4
   modern-css-reset: 1.4.0
   svelte-use-resize-observer: 1.0.2
-  wrapped-fetch: github.com/winston0410/wrapped-fetch/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4
+  wrapped-fetch: github.com/winston0410/wrapped-fetch/bf719c57bfc89cf358505ee4b7ab1252f4940d6d
   yup: 0.32.9
 
 devDependencies:
@@ -1746,8 +1746,8 @@ packages:
       toposort: 2.0.2
     dev: false
 
-  github.com/winston0410/wrapped-fetch/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4:
-    resolution: {tarball: https://codeload.github.com/winston0410/wrapped-fetch/tar.gz/7dceb1ed76f1dfcaf7c523df45892e24f46f1be4}
+  github.com/winston0410/wrapped-fetch/bf719c57bfc89cf358505ee4b7ab1252f4940d6d:
+    resolution: {tarball: https://codeload.github.com/winston0410/wrapped-fetch/tar.gz/bf719c57bfc89cf358505ee4b7ab1252f4940d6d}
     name: wrapped-fetch
     version: 1.0.0
     prepare: true

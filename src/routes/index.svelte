@@ -17,7 +17,6 @@
 </script>
 
 <script lang="ts">
-import { handleFetchError } from '../lib/fetch'
 import { createForm } from 'felte'
 import * as yup from 'yup'
 import { validator } from '@felte/validator-yup';
@@ -36,7 +35,6 @@ onSubmit: async (values) => {
         method: "POST",
         body: JSON.stringify(values)
     })
-    .then(handleFetchError)
     .then((res) => {
         submitError = ""
         //  goto doesn't work here, as getSession requires a request from server.

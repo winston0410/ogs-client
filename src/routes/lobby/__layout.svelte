@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-import { batchFetch } from '$lib/helper'
-import { handleFetchError } from '$lib/fetch'
 import createFetch from 'wrapped-fetch'
 import type { UnwrappedResponse } from 'wrapped-fetch'
 import type { IGames, IUser } from '$lib/typing';
@@ -46,6 +44,6 @@ if(games.ok){
 </style>
 
 <div class="container">
-<Header user={$currentUser}/>
+<Header user={$currentUser} gameList={gameList}/>
 <slot></slot>
 </div>

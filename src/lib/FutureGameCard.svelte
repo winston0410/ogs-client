@@ -7,7 +7,7 @@ import GameMetaData from '$lib/GameMetaData.svelte'
 
 <script lang="ts">
 export let tournament: ITournament
-console.log(tournament)
+console.log('future game', tournament, tournament.time_start)
 </script>
 
 <style>
@@ -15,5 +15,8 @@ console.log(tournament)
 
 <Card>
 <Heading tag={'h3'} size={3} margin={0}>{tournament.name}</Heading>
-<!--  <GameMetaData width={game.width} rule={game.rules}/>  -->
+{#if tournament.description }
+<p>{tournament.description}</p>
+{/if}
+<!--  <GameMetaData handicap={tournament.handicap} width={tournament.board_size} rule={tournament.rules}/>  -->
 </Card>

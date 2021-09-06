@@ -25,7 +25,6 @@ import Heading from '$lib/Heading.svelte'
 
 <script lang="ts">
 import { gameList } from "/src/store"
-const currentTime = new Date().getTime()
 console.log('check gamelist', $gameList)
 export let tournaments: UnwrappedResponse<ITournaments>
 const currentGame = $gameList.body?.results.find((item) => !item.ended)

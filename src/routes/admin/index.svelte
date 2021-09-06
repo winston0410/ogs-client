@@ -8,7 +8,6 @@ export async function load({page, session}) {
 </script>
 
 <script lang="ts">
-import { handleFetchError } from '$lib/fetch'
 import { createForm } from 'felte'
 import * as yup from 'yup'
 import { validator } from '@felte/validator-yup';

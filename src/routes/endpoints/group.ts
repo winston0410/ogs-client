@@ -1,19 +1,24 @@
-import type { RequestHandler } from '@sveltejs/kit'
-import { handleFetchError, catched } from '../../lib/fetch'
-import endpoints from '../../endpoints'
+import type { RequestHandler } from '@sveltejs/kit';
+import endpoints from '../../endpoints';
+import createFetch from 'wrapped-fetch';
+import type { UnwrappedResponse } from 'wrapped-fetch';
+import type { IGroup } from '$lib/typing';
 
-const getGroup = async (token:string) => {
-    return fetch(endpoints.group, {
-        method: "GET",
-        headers: { authorization: `Bearer ${token}`}
-    }).then(handleFetchError).then(res => res.json())
-}
+const getGroup = (token: string): Promise<UnwrappedResponse<IGroup>> => {
+    const f = createFetch()
+	return f(endpoints.group, {
+		method: 'GET',
+		headers: { authorization: `Bearer ${token}` }
+	})
+};
 
 export const get: RequestHandler = async (req) => {
-    return await catched(async () => {
-    const data = await getGroup(req.locals.accessToken)
-    return {
-        body: data
-    }
-    })
-}
+	try {
+		const data = await getGroup(req.locals.accessToken);
+		return {
+			body: data.body
+		};
+	} catch (e) {
+		console.log(e);
+	}
+};

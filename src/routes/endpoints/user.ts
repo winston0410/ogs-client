@@ -1,33 +1,37 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { handleFetchError, catched } from '../../lib/fetch';
 import endpoints from '../../endpoints';
 import type { IUser, ICurrentUser } from '$lib/typing';
+import createFetch from "wrapped-fetch"
+import type {UnwrappedResponse} from "wrapped-fetch"
 
-const getCurrentUser = async (token: string): Promise<ICurrentUser> => {
-	return fetch(endpoints.meUser, {
+const getCurrentUser = async (token: string): Promise<UnwrappedResponse<ICurrentUser>> => {
+    const f = createFetch()
+	return f(endpoints.meUser, {
 		method: 'GET',
 		headers: { authorization: `Bearer ${token}` }
 	})
-		.then(handleFetchError)
-		.then((res) => res.json());
 };
 
-const getUser = async (id:number, token: string): Promise<IUser> => {
-	return fetch(`${endpoints.user}/${id}`, {
+const getUser = async (id: number, token: string): Promise<UnwrappedResponse<IUser>> => {
+    const f = createFetch()
+	return f(`${endpoints.user}/${id}`, {
 		method: 'GET',
 		headers: { authorization: `Bearer ${token}` }
 	})
-		.then(handleFetchError)
-		.then((res) => res.json());
 };
 
 export const get: RequestHandler = async (req) => {
-	return await catched(async () => {
+	try {
 		const current = await getCurrentUser(req.locals.accessToken);
-        const profile = await getUser(current.id, req.locals.accessToken);
-        
+        if (!current.ok) {
+            return current
+        }
+		const profile = await getUser(current.body.id, req.locals.accessToken);
+
 		return {
-			body: profile
+			body: profile.body
 		};
-	});
+	} catch (e) {
+		console.log(e);
+	}
 };
