@@ -8,6 +8,10 @@
   export const router = false;
   export async function load({ session }) {
     const isAdmin = !!parseInt(session.isAdmin)
+
+    if(new Date().getTime() >= parseInt(session.expiresIn)){
+        return {}
+    }
     
     if(session.accessToken){
         if(isAdmin){

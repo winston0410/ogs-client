@@ -1,7 +1,14 @@
 <script context="module" lang="ts">
 import '/src/app.css'
 export async function load({page, session, fetch}) {
-  if ( page.path !== "/" && !session.accessToken) {
+  if ( page.path === "/"){
+      return { props: {} }
+  }
+  if ( !session.accessToken) {
+    return { redirect: '/', status: 302 }
+  }
+
+  if ( new Date().getTime() >= parseInt(session.expiresIn)) {
     return { redirect: '/', status: 302 }
   }
   
