@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+  import Button from '$lib/Button.svelte'
   export const router = false;
   export async function load({ session }) {
     const isAdmin = !!parseInt(session.isAdmin)
@@ -39,6 +40,7 @@ onSubmit: async (values) => {
         body: JSON.stringify(values)
     })
     .then((res) => {
+        console.log('check res', res)
         if(res.ok){
             //  goto doesn't work here, as getSession requires a request from server.
             //  redirect to the current page, and let __layout.svelte to take over to redirection
@@ -142,7 +144,7 @@ display: flex;
             </span>
           </ValidationMessage>
         </div>
-        <button type="submit">Log In</button>
+        <Button type={"submit"}>Log In</Button>
         <div class="validation">
         <span class="validation-message">{submitError}</span>
         </div>
