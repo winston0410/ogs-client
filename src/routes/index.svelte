@@ -21,6 +21,7 @@ import { createForm } from 'felte'
 import * as yup from 'yup'
 import { validator } from '@felte/validator-yup';
 import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+import createFetch from 'wrapped-fetch'
 
 const schema = yup.object({
 name: yup.string().required(),
@@ -31,22 +32,30 @@ let submitError = ""
 
 const { form } = createForm({
 onSubmit: async (values) => {
-    fetch(`/endpoints/callback`, {
+    const f = createFetch()
+    
+    f(`/endpoints/callback`, {
         method: "POST",
         body: JSON.stringify(values)
     })
     .then((res) => {
-        submitError = ""
-        //  goto doesn't work here, as getSession requires a request from server.
-        //  redirect to the current page, and let __layout.svelte to take over to redirection
-        window.location.href = "/"
-     })
-    .catch((err) => {
-           if(err.status >= 400 && err.status < 500){
+        if(res.ok){
+            //  goto doesn't work here, as getSession requires a request from server.
+            //  redirect to the current page, and let __layout.svelte to take over to redirection
+            window.location.href = "/"
+           return
+        }
+
+           if(res.status >= 400 && res.status < 500){
                submitError = "Either your username or password is not correct. Please try again."
            } else {
                submitError = "Something wrong with our server. Please try again later."
            }
+     })
+    .catch((err) => {
+        console.log(err)
+
+        submitError = "Something wrong with your network connection. Please try again later."
     })
 },
     extend: [validator, svelteReporter],
@@ -60,6 +69,10 @@ onSubmit: async (values) => {
 </svelte:head>
 
 <style>
+  button[type="submit"]{
+    cursor: pointer;
+  }
+
   .login{
 height: 100vh;
 width: 100%;
@@ -99,6 +112,7 @@ display: flex;
     height: var(--validation-message-height);
     position: absolute;
     top: 100%;
+    transform: translateY(50%);
     left: 0%;
     color: red;
   }

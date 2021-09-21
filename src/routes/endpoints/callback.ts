@@ -25,15 +25,17 @@ const getAccessToken = async (
 	const f = createFetch();
 	const queryString = new URLSearchParams();
 	queryString.append('username', username);
-	if (refreshToken) {
-		queryString.append('grant_type', 'refresh_token');
-		queryString.append('refresh_token', refreshToken);
-	} else {
-		queryString.append('grant_type', 'password');
-		queryString.append('password', password);
-	}
+	//  if (refreshToken) {
+	//  queryString.append('grant_type', 'refresh_token');
+	//  queryString.append('refresh_token', refreshToken);
+	//  } else {
+	queryString.append('grant_type', 'password');
+	queryString.append('password', password);
+	//  }
 	queryString.append('client_id', env.VITE_CLIENT_ID);
 	queryString.append('client_secret', env.VITE_CLIENT_SECRET);
+
+	console.log('check queryString', queryString.toString());
 
 	return f(endpoints.accessToken, {
 		method: 'POST',
@@ -62,22 +64,19 @@ export const post: RequestHandler<Locals, string> = async (req) => {
 			}
 		};
 	}
-	const res = await getAccessToken(
-		name,
-		password,
-		refreshToken
-	)
+	const res = await getAccessToken(name, password, refreshToken);
 
-    if (!res.ok) {
+	if (!res.ok) {
+		console.log('check res', res.body);
 		return {
 			status: 401,
 			body: {
 				message: 'Authorization failed.'
 			}
 		};
-    }
-    
-    const { access_token, refresh_token, expires_in } = res.body
+	}
+
+	const { access_token, refresh_token, expires_in } = res.body;
 
 	req.locals.username = name;
 	req.locals.accessToken = access_token;
@@ -88,23 +87,23 @@ export const post: RequestHandler<Locals, string> = async (req) => {
 	req.locals.expiresIn = ts;
 
 	//  Use database if needs to scale later
-	if (env.VITE_ADMIN_USERNAMES.split(':').includes(name)) {
-		req.locals.isAdmin = 1;
-	}
+	//  if (env.VITE_ADMIN_USERNAMES.split(':').includes(name)) {
+	//  req.locals.isAdmin = 1;
+	//  }
 
-	if (req.locals.isAdmin) {
-		return {
-			status: 302,
-			headers: {
-				Location: '/admin'
-			}
-		};
-	} else {
-		return {
-			status: 302,
-			headers: {
-				Location: '/lobby'
-			}
-		};
-	}
+	//  if (req.locals.isAdmin) {
+	//  return {
+	//  status: 302,
+	//  headers: {
+	//  Location: '/admin'
+	//  }
+	//  };
+	//  } else {
+	return {
+		status: 302,
+		headers: {
+			Location: '/lobby'
+		}
+	};
+	//  }
 };
