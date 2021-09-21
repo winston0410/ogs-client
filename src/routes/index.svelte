@@ -137,7 +137,7 @@ display: flex;
         </label>
           <ValidationMessage for="name" let:messages={message}>
             <span id="name-validation" class="validation-message" aria-live="polite">
-              {message ?? ""}
+              {message ? "Name is a required field." : ""}
             </span>
           </ValidationMessage>
         </div>
@@ -148,7 +148,7 @@ display: flex;
         </label>
           <ValidationMessage for="password" let:messages={message}>
             <span id="password-validation" class="validation-message" aria-live="polite">
-              {message ?? ""}
+              {message ? "Password is a required field." : ""}
             </span>
           </ValidationMessage>
         </div>
