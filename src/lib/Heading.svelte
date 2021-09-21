@@ -51,6 +51,10 @@ export const className = `heading color-${color} size-${size} margin-${margin}`
 <span class={className}>
     <slot />
 </span>
+{:else if tag === "h1"}
+<h1 class={className}>
+    <slot />
+</h1>
 {:else if tag === "h3"}
 <h3 class={className}>
     <slot />

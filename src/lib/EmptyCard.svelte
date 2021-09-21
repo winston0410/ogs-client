@@ -13,6 +13,7 @@ export let message: string
         align-items: center;
         width: 100%;
         min-height: var(--placeholder-height);
+        cursor: not-allowed;
     }
         
     div{

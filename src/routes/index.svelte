@@ -1,5 +1,10 @@
 <script context="module" lang="ts">
   import Button from '$lib/Button.svelte'
+  import Heading from '$lib/Heading.svelte'
+  import { createForm } from 'felte'
+  import * as yup from 'yup'
+  import { validator } from '@felte/validator-yup';
+  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
   export const router = false;
   export async function load({ session }) {
     const isAdmin = !!parseInt(session.isAdmin)
@@ -18,11 +23,6 @@
 </script>
 
 <script lang="ts">
-import { createForm } from 'felte'
-import * as yup from 'yup'
-import { validator } from '@felte/validator-yup';
-import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
-
 const schema = yup.object({
 name: yup.string().required(),
 password: yup.string().required(),
@@ -51,6 +51,7 @@ onSubmit: async (values) => {
            }
      })
     .catch((err) => {
+        console.log(err)
         submitError = "Something wrong with your network connection. Please try again later."
     })
 },
@@ -60,15 +61,11 @@ onSubmit: async (values) => {
 </script>
 
 <svelte:head>
-    <title>Smartgo academy</title>
-    <meta name="description" content="" />
+    <title>Smartgo academy OGS portal</title>
+    <meta name="description" content="OGS portal for Smart Go Academy" />
 </svelte:head>
 
 <style>
-  button[type="submit"]{
-    cursor: pointer;
-  }
-
   .login{
 height: 100vh;
 width: 100%;
@@ -76,6 +73,7 @@ display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 var(--sm-space);
+    flex-direction: column;
    }
 
   .login-form{
@@ -88,11 +86,23 @@ display: flex;
       margin-right: auto;
       background-color: #eee;
       padding: var(--xxl-space);
+      border-radius: var(--sm-radius);
+  }
+
+  input {
+    border: 2px solid var(--highlight-color);
+    border-radius: var(--sm-radius);
+    outline: none;
+  }
+
+  input:focus{
+    border-color: var(--highlight-color-tint1);
   }
 
   .login-form-label{
       display: flex;
       flex-direction: column;
+      font-size: var(--sm-font);
   }
 
   .validation, .validation-message{
@@ -104,17 +114,21 @@ display: flex;
     margin-bottom: var(--validation-message-height);
   }
 
-  .validation-message{
+  .validation-message, .form-validation-message{
     height: var(--validation-message-height);
     position: absolute;
     top: 100%;
-    transform: translateY(50%);
     left: 0%;
     color: red;
+  }
+      
+  .form-validation-message{
+    transform: translateY(50%);
   }
 </style>
 
 <div class="login">
+    <Heading tag={"h1"}>Smartgo Academy OGS portal</Heading>
     <form class="login-form" use:form>
         <div class="validation">
         <label class="login-form-label">
@@ -140,7 +154,7 @@ display: flex;
         </div>
         <Button type={"submit"}>Log In</Button>
         <div class="validation">
-        <span class="validation-message">{submitError}</span>
+        <span class="form-validation-message">{submitError}</span>
         </div>
     </form>
 </div>

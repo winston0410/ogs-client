@@ -70,7 +70,7 @@ section:not(:last-of-type){
     {/if}
     </section>
     <section>
-    <Heading>Game to play next</Heading>
+    <Heading>Games to play next</Heading>
         <FutureGameList tournaments={tournaments} />
     </section>
     <section>
