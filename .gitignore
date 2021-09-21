@@ -5,3 +5,4 @@ node_modules
 /package
 .env.development
 .direnv
+.vercel_build_output

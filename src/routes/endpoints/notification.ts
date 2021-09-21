@@ -1,5 +1,4 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { handleFetchError, catched } from '../../lib/fetch';
 import endpoints from '../../endpoints';
 import type { INotifications } from '$lib/typing'
 
