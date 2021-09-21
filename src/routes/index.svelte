@@ -22,7 +22,6 @@ import { createForm } from 'felte'
 import * as yup from 'yup'
 import { validator } from '@felte/validator-yup';
 import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
-import createFetch from 'wrapped-fetch'
 
 const schema = yup.object({
 name: yup.string().required(),
@@ -33,14 +32,11 @@ let submitError = ""
 
 const { form } = createForm({
 onSubmit: async (values) => {
-    const f = createFetch()
-    
-    f(`/endpoints/callback`, {
+    fetch(`/endpoints/callback`, {
         method: "POST",
         body: JSON.stringify(values)
     })
     .then((res) => {
-        console.log('check res', res)
         if(res.ok){
             //  goto doesn't work here, as getSession requires a request from server.
             //  redirect to the current page, and let __layout.svelte to take over to redirection
@@ -55,8 +51,6 @@ onSubmit: async (values) => {
            }
      })
     .catch((err) => {
-        console.log(err)
-
         submitError = "Something wrong with your network connection. Please try again later."
     })
 },
