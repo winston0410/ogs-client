@@ -9,7 +9,6 @@ export default {
     notification: `${domain}/api/v1/menotifications`,
     tournament: `${domain}/api/v1/tournaments`,
     meTournament: `${domain}/api/v1/metournaments`,
-    postTournament: `${domain}/api/v1/tournament`,
     joinTournament: `${domain}/api/v1/me/tournaments/invitations`,
     accessToken: `${domain}/oauth2/token/`
 }

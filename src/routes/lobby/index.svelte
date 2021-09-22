@@ -5,10 +5,18 @@ import createFetch from 'wrapped-fetch'
 
 export const load = async ({ fetch }) => {
     const f = createFetch(fetch)
+    //  auto accept tournament invitation
     f("/endpoints/tournament/notification/auto-accept", {
-        method: "POST"
+        method: "PUT"
     }).then(res => {
         console.log('check res', res)
+    })
+
+    //  auto join group's tournament
+    f("/endpoints/group/tournament/auto-accept", {
+        method: "PUT"
+    }).then(res => {
+        console.log('check group tournament auto accept logic', res)
     })
  return {
     props: {

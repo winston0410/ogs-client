@@ -12,7 +12,7 @@ const getNotification = async (token: string): Promise<UnwrappedResponse<Array<I
 	});
 };
 
-export const post: RequestHandler<{ accessToken: string }, string> = async (req) => {
+export const put: RequestHandler<{ accessToken: string }, string> = async (req) => {
 	try {
 		const joinedTournament = [];
 		const notifications = await getNotification(req.locals.accessToken);
@@ -31,23 +31,21 @@ export const post: RequestHandler<{ accessToken: string }, string> = async (req)
 					headers: { authorization: `Bearer ${req.locals.accessToken}` }
 				});
 
-				if (res.body.group.id === 10004) {
-					const ts = new Date().getTime();
-					if (ts < new Date(res.body.time_start).getTime()) {
-						const joinRes = await f(endpoints.joinTournament, {
-							method: 'POST',
-							headers: {
-								authorization: `Bearer ${req.locals.accessToken}`,
-								'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({
-								request_id: n.tournamentrqid
-							})
+				const ts = new Date().getTime();
+				if (ts < new Date(res.body.time_start).getTime()) {
+					const joinRes = await f(endpoints.joinTournament, {
+						method: 'POST',
+						headers: {
+							authorization: `Bearer ${req.locals.accessToken}`,
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							request_id: n.tournamentrqid
 						})
+					});
 
-                        if (joinRes.ok) {
-							joinedTournament.push(n.tournamentid);
-                        }
+					if (joinRes.ok) {
+						joinedTournament.push(n.tournamentid);
 					}
 				}
 			}
