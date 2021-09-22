@@ -23,14 +23,29 @@ const getOpenTournaments = async (
 	queryString.append('page', '1');
 	queryString.append('group', `${groupId}`);
 
-	const url = `${endpoints.tournament}?${queryString.toString()}`;
-
-	return f(url, {
+	const fetchOpt = {
 		method: 'GET',
 		headers: {
 			authorization: `Bearer ${token}`
 		}
-	});
+	};
+
+	const res = await f<ITournaments>(`${endpoints.tournament}?${queryString.toString()}`, fetchOpt);
+
+    //  Get the last page
+	if (!res.body.next) {
+		return res;
+	}
+
+	const pageCount = Math.ceil(res.body.count / 10);
+
+	const newQueryString = new URLSearchParams();
+
+	newQueryString.append('page_size', '100');
+	newQueryString.append('page', `${pageCount}`);
+	newQueryString.append('group', `${groupId}`);
+
+	return f(`${endpoints.tournament}?${queryString.toString()}`, fetchOpt);
 };
 
 export const put: RequestHandler<{ accessToken: string }, string> = async (req) => {
