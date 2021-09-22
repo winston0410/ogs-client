@@ -1,29 +1,30 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import endpoints from '../../endpoints';
-import type { INotifications } from '$lib/typing'
+import type { INotification } from '$lib/typing';
+import createFetch from 'wrapped-fetch';
+import type { UnwrappedResponse } from 'wrapped-fetch';
 
-const getNotification = async (token: string): Promise<INotifications> => {
-	return fetch(endpoints.notification, {
+const f = createFetch();
+
+const getNotification = async (token: string): Promise<UnwrappedResponse<Array<INotification>>> => {
+	return f(endpoints.notification, {
 		method: 'GET',
 		headers: { authorization: `Bearer ${token}` }
-	})
-		.then(handleFetchError)
-		.then((res) => res.json());
+	});
 };
 
 export const get: RequestHandler = async (req) => {
-	return await catched(async () => {
-		const data = (await getNotification(req.locals.accessToken)).map((item) => {
-			if (item.timestamp) {
-				return {
-					...item,
-					timestamp: item.timestamp * 1000
-				};
-			}
+	const data = (await getNotification(req.locals.accessToken)).body.map((item) => {
+		if (!item.timestamp) {
 			return item;
-		});
+		}
+
 		return {
-			body: data
+			...item,
+			timestamp: item.timestamp * 1000
 		};
 	});
+	return {
+		body: data
+	};
 };
