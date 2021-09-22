@@ -28,19 +28,16 @@ export interface IPlayer {
 	username: string;
 }
 
-export interface ITournaments {
-	count: number;
-	next: null;
-	previous: null;
-	results: Array<ITournament>;
+export interface IPaginatedResponse<T> {
+    count: number;
+    next: null | number;
+    previous: null | number;
+    results: Array<T>;
 }
 
-export interface IGames {
-	count: number;
-	next: null;
-	previous: null;
-	results: Array<IGame>;
-}
+export type ITournaments = IPaginatedResponse<ITournament>
+
+export type IGames = IPaginatedResponse<IGame>
 
 export interface IGame {
 	ended: null | string;
@@ -87,6 +84,8 @@ export interface IGroup {
 	member_count: number;
 	icon: string;
 }
+
+export type IGroups = IPaginatedResponse<IGroup>
 
 export interface ITournament {
 	id: number;
