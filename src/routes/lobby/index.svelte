@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-import type {IGames, ITournaments} from '$lib/typing'
+import type {IGame, IGames, ITournaments} from '$lib/typing'
 import type { UnwrappedResponse } from 'wrapped-fetch'
 import createFetch from 'wrapped-fetch'
 
@@ -33,9 +33,8 @@ import Heading from '$lib/Heading.svelte'
 
 <script lang="ts">
 import { gameList } from "/src/store"
-console.log('check gamelist', $gameList)
 export let tournaments: UnwrappedResponse<ITournaments>
-const currentGame = $gameList.body?.results.find((item) => !item.ended)
+const currentGames: Array<IGame> = $gameList.body?.results.filter((item: IGame) => !item.ended)
 </script>
 
 <svelte:head>
@@ -71,8 +70,10 @@ section:not(:last-of-type){
     {#if $gameList.ok }
     <section>
         <Heading>Game in progress</Heading>
-    {#if currentGame}
-        <GameCard game={currentGame}/>
+    {#if currentGames.length > 0}
+        {#each currentGames as game}
+            <GameCard game={game}/>
+        {/each}
     {:else}
         <EmptyCard message={"You don't have any game in progress right now."}/>
     {/if}
