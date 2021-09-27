@@ -62,10 +62,18 @@ onSubmit: async (values) => {
     extend: [validator, svelteReporter],
     validateSchema: schema,
 })
+
+export let formElem: HTMLFormElement
+
+const handleKeydown = (e: KeyboardEvent) => {
+    if(e.code === "Enter"){
+        formElem.submit()
+    }
+}
 </script>
 
 <svelte:head>
-    <title>Smartgo academy OGS portal</title>
+    <title>Smart Go Academy OGS portal</title>
     <meta name="description" content="OGS portal for Smart Go Academy" />
 </svelte:head>
 
@@ -131,9 +139,11 @@ display: flex;
   }
 </style>
 
+<svelte:body on:keydown={handleKeydown}/>
+
 <div class="login">
     <Heading tag={"h1"}>Smartgo Academy OGS portal</Heading>
-    <form class="login-form" use:form>
+    <form  bind:this={formElem} class="login-form" use:form>
         <div class="validation">
         <label class="login-form-label">
         <span>Username</span>
@@ -156,6 +166,7 @@ display: flex;
             </span>
           </ValidationMessage>
         </div>
+        <!--  TODO: Handle submittion with enter  -->
         <Button type={"submit"}>Log In</Button>
         <div class="validation">
         <span class="form-validation-message">{submitError}</span>
