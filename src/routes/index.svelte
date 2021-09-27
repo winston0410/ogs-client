@@ -142,7 +142,7 @@ display: flex;
 <svelte:body on:keydown={handleKeydown}/>
 
 <div class="login">
-    <Heading tag={"h1"}>Smartgo Academy OGS portal</Heading>
+    <Heading tag={"h1"}>Smart Go Academy OGS portal</Heading>
     <form  bind:this={formElem} class="login-form" use:form>
         <div class="validation">
         <label class="login-form-label">
