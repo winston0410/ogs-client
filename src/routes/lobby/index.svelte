@@ -38,7 +38,7 @@ const currentGames: Array<IGame> = $gameList.body?.results.filter((item: IGame) 
 </script>
 
 <svelte:head>
-    <title>Smartgo academy</title>
+    <title>Smart Go Academy OGS Portal</title>
     <meta name="description" content="" />
 </svelte:head>
 

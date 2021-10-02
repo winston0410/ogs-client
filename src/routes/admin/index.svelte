@@ -70,7 +70,7 @@ onSubmit: async (values) => {
 </style>
 
 <svelte:head>
-    <title>Smartgo academy</title>
+    <title>Smart Go Academy OGS Portal Admin</title>
     <meta name="description" content="" />
 </svelte:head>
 
