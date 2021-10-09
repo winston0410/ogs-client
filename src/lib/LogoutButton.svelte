@@ -6,4 +6,4 @@ export const handleClick = () => {
 }
 </script>
 
-<Button handleClick={handleClick}>Log out</Button>
+<Button handleClick={handleClick}>登出</Button>

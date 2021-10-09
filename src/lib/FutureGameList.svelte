@@ -41,7 +41,7 @@ li:not(:last-of-type){
     {/each}
 </ul>
 {:else}
-    <EmptyCard message={"You don't have any upcoming games."} />
+    <EmptyCard message={"冇之後要舉行嘅對局。"} />
 {/if}
 {:else}
    <div>
