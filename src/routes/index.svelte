@@ -48,14 +48,14 @@
 					}
 
 					if (res.status >= 400 && res.status < 500) {
-						submitError = 'Either your username or password is not correct. Please try again.';
+						submitError = '你嘅用戶名或者密碼唔啱喎，麻煩你再試多次。';
 					} else {
-						submitError = 'Something wrong with our server. Please try again later.';
+						submitError = '我哋嘅服務有啲問題，麻煩你之後再試過啦。';
 					}
 				})
 				.catch((err) => {
 					console.log(err);
-					submitError = 'Something wrong with your network connection. Please try again later.';
+					submitError = '你嘅網絡有啲問題，麻煩你之後再試多次啦。';
 				});
 		},
 		extend: [validator, svelteReporter],
@@ -72,39 +72,39 @@
 </script>
 
 <svelte:head>
-	<title>Smart Go Academy OGS portal</title>
-	<meta name="description" content="OGS portal for Smart Go Academy" />
+	<title>妙手棋院 比賽報到網站</title>
+	<meta name="description" content="妙手棋院 比賽報到網站" />
 </svelte:head>
 
 <svelte:body on:keydown={handleKeydown} />
 
 <div class="login">
-	<Heading tag={'h1'}>Smart Go Academy OGS portal</Heading>
+	<Heading tag={'h1'}>妙手棋院 比賽報到網站</Heading>
 	<form class="login-form" use:form>
 		<div class="validation">
 			<label class="login-form-label">
-				<span>Username</span>
+				<span>用戶名</span>
 				<input id="name" type="text" name="name" />
 			</label>
 			<ValidationMessage for="name" let:messages={message}>
 				<span id="name-validation" class="validation-message" aria-live="polite">
-					{message ? 'Name is a required field.' : ''}
+					{message ? '你未填用戶名喎。' : ''}
 				</span>
 			</ValidationMessage>
 		</div>
 		<div class="validation">
 			<label class="login-form-label">
-				<span>Password</span>
+				<span>密碼</span>
 				<input type="password" id="password" name="password" />
 			</label>
 			<ValidationMessage for="password" let:messages={message}>
 				<span id="password-validation" class="validation-message" aria-live="polite">
-					{message ? 'Password is a required field.' : ''}
+					{message ? '你未填密碼喎。' : ''}
 				</span>
 			</ValidationMessage>
 		</div>
 		<!--  TODO: Handle submittion with enter  -->
-		<Button type={'submit'}>Log In</Button>
+		<Button type={'submit'}>登入</Button>
 		<div class="validation">
 			<span class="form-validation-message">{submitError}</span>
 		</div>

@@ -38,8 +38,8 @@ const currentGames: Array<IGame> = $gameList.body?.results.filter((item: IGame) 
 </script>
 
 <svelte:head>
-    <title>Smart Go Academy OGS Portal</title>
-    <meta name="description" content="" />
+    <title>妙手棋院 比賽報到網站</title>
+    <meta name="description" content="妙手棋院 比賽報到網站" />
 </svelte:head>
 
 <style>
@@ -69,21 +69,21 @@ section:not(:last-of-type){
 <main>
     {#if $gameList.ok }
     <section>
-        <Heading>Game in progress</Heading>
+        <Heading>而家嘅對局</Heading>
     {#if currentGames.length > 0}
         {#each currentGames as game}
             <GameCard game={game}/>
         {/each}
     {:else}
-        <EmptyCard message={"You don't have any game in progress right now."}/>
+        <EmptyCard message={"而家冇進行𡁵嘅對局。"}/>
     {/if}
     </section>
     <section>
-    <Heading>Games to play next</Heading>
+    <Heading>之後嘅對局</Heading>
         <FutureGameList tournaments={tournaments} />
     </section>
     <section>
-        <Heading>Last 10 games result</Heading>
+        <Heading>最近10盤嘅對局記錄</Heading>
         <GameHistoryList games={$gameList} />
     </section>
     {/if}
